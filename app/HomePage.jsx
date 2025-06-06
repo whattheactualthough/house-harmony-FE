@@ -5,6 +5,7 @@ import { mockGetTasksById, mockGetUserById } from "../api";
 import TaskCard from "../components/TaskCard";
 import UserCard from "../components/UserCard";
 
+
 export default function UserPage() {
  const [user, setUser] = useState(null);
  const [tasks, setTasks] = useState(null);
@@ -35,16 +36,16 @@ export default function UserPage() {
       <Link href="/TasksByUser" accessibilityLabel = "go to my tasks">my tasks</Link>
       <Link href="/TasksByRoom" accessibilityLabel = "go to tasks by room">by room</Link>
     </View>
-    <ul> 
+   <>
       
       <UserCard key ={2} user={user}/>
-    </ul>
-    <ul>
+      </>
+   <>
       {tasks.map((task) => {
         const key = task.id
         return <TaskCard key={key} task={task} />
     })}
-    </ul>
+ </>
      <View>
       <Link href="/LeaderBoard" accessibilityLabel = "go to leaderboard">leaderboard</Link>
       <Link href="/UserProfile" accessibilityLabel = "go to full your profile page">profile page</Link>
