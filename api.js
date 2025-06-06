@@ -195,7 +195,12 @@ export const mockGetTasksByRoom = (id) => {
 });
 }
 
-
+export const mockGetPointsById = (id) => {
+    return Promise.resolve({
+       userId: 2,
+       totalPoints: 50
+    })
+}
 
 export const mockGetTasksById = (id) => {
  return Promise.resolve({
