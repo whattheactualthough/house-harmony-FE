@@ -4,6 +4,8 @@ import { View } from "react-native";
 import { Text } from "react-native-web";
 import { mockGetTasks } from "../api";
 import TaskCard from "../components/TaskCard";
+import CreateTask from "./CreateTask";
+
 
 
 export default function TaskList() {
@@ -19,6 +21,10 @@ export default function TaskList() {
     return <Text>Loading...</Text>;
   }
 
+  function addTask(){
+   return (CreateTask)
+  }
+
   return (
     <View>
       <Link href="/HomePage" accessibilityLabel="go back to homepage">
@@ -31,6 +37,7 @@ export default function TaskList() {
             return <TaskCard key={key} task={task} />;
           })}
         </ol>
+        <Link href="/CreateTask" accessibilityLabel="create a new task">create new task</Link>
     </View>
   );
 }
