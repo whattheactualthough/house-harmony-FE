@@ -35,7 +35,6 @@ export default function UserPage() {
       <Link href="/TasksByRoom" accessibilityLabel = "go to tasks by room">by room</Link>
     </View>
    <View>
-      
       <UserCard key ={2} user={user}/>
       </View>
    <View>

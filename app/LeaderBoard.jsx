@@ -1,7 +1,6 @@
-import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { mockGetUsers, mockGetPointsById } from "../api";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { mockGetPointsById, mockGetUsers } from "../api";
 
 export default function LeaderBoard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -10,11 +9,11 @@ export default function LeaderBoard() {
   useEffect(() => {
     const fetchLeaderboardData = async () => {
       try {
-        // Get all users
+        
         const usersResponse = await mockGetUsers();
         const users = usersResponse.data;
 
-        // Get points for each user
+        
         const leaderboardPromises = users.map(async (user) => {
           const pointsResponse = await mockGetPointsById(user.id);
           return {
@@ -25,7 +24,7 @@ export default function LeaderBoard() {
 
         const leaderboardResults = await Promise.all(leaderboardPromises);
         
-        // Sort by points (highest first) and add rank
+        
         const sortedLeaderboard = leaderboardResults
           .sort((a, b) => b.totalPoints - a.totalPoints)
           .map((user, index) => ({

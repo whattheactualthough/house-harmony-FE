@@ -118,7 +118,7 @@ export const mockGetUserById = (id) => {
    created_at: '2025-06-02T09:52:05.771079+00:00',
    user_name: 'Kiran',
    group_name: 'House Harmony Rd',
-   image_url: '',
+   image_url: 'https://ca.slack-edge.com/T01KPE0QGCD-U089C313VM4-02359cc6e721-512',
    is_admin: true,
    badges_earned: null
        }
