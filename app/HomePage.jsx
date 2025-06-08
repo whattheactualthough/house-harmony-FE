@@ -43,10 +43,6 @@ export default function UserPage() {
         return <TaskCard key={key} task={task} />
     })}
  </View>
-     <View>
-      <Link href="/LeaderBoard" accessibilityLabel = "go to leaderboard">leaderboard</Link>
-      <Link href="/UserProfile" accessibilityLabel = "go to full your profile page">profile page</Link>
-     </View>
    </View> 
  );
 }
