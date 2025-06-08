@@ -230,7 +230,7 @@ export const mockGetTasksById = (id) => {
  }, {
    id: 3,
    task_name: 'hoover ',
-   description: 'there are new hoover bags in th ecoat cuboard :)',
+   description: 'there are new hoover bags in the coat cuboard :)',
    is_urgent: false,
    due_date: '2025-06-15',
    task_specific_date: '2025-06-04',

@@ -4,22 +4,42 @@
 // as status is updated to complete points for assigned user are updated on profile, homepage, leaderboard
 
 import { StyleSheet, Text, View } from "react-native";
+import typography from "../styles/typography";
 import getRoomIcons from "../utils";
 
 function TaskCard({ task }) {
-  console.log(task);
-  
   return (
-    <View>
-      <View style={styles.container}>
-        <View style ={styles.taskHeader} > {getRoomIcons(task.rooms.room_name)}
-        <Text style={styles.roomNameText}>{task.rooms.room_name}</Text>
+    // left: title with icon, description, status
+    // right: assigned to, points given
+    <View style={styles.container}>
+        <View style = {styles.taskHeader}>
+        {getRoomIcons(task.rooms.room_name)}
+        <Text style={[styles.taskHeaderText, typography.heading]}>
+          {task.rooms.room_name}
+        </Text>
         </View>
-        <Text style = {{marginTop: 16}}>{task.task_name}</Text>
-        <Text>{task.status.description}</Text>
-        <Text>{task.users ? `Assigned to: ${task.users.user_name}` : 'Claim now'}</Text>
-        <Text>{task.task_desirability_level.points} points</Text>
-        {task.task_specific_date ? task.task_specific_date : task.due_date}
+      <View>
+        <View style={styles.topCard}>
+          <View style={styles.topLeftCard}>
+            <Text style={{ marginTop: 16 }}>{task.task_name}</Text>
+            <Text>{task.description}</Text>
+          </View>
+          <View style={styles.topRightCard}>
+            <Text>{task.task_desirability_level.points} points</Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.bottomCard}>
+        <Text>
+          {task.users ? `Assigned to: ${task.users.user_name}` : "Claim now"}
+        </Text>
+
+        <Text>
+          {task.task_specific_date ? task.task_specific_date : task.due_date}
+        </Text>
+
+        <Text>Status</Text>
       </View>
     </View>
   );
@@ -30,29 +50,44 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#65CCB8",
     borderRadius: 8,
-    marginVertical: 10, 
-    width: "90%", 
-    alignSelf: "center"
+    marginVertical: 10,
+    width: "90%",
+    alignSelf: "center",
+    overflow: "hidden",
+    flexDirection: "column",
+  },
+  taskHeaderText: {
+    marginLeft: 6,
   },
   taskHeader: {
     backgroundColor: "#F2F2F2",
+    paddingVertical: 7,
+    paddingHorizontal: 12,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    width: "100%",
     flexDirection: "row",
-    marginBottom: 8
+    alignItems: "center",
   },
-roomNameText: {
-    marginLeft: 8,
-    fontWeight: "bold"
-},
-taskHeader: {
-  backgroundColor: '#F2F2F2', 
-  paddingVertical: 7,
-  paddingHorizontal: 12,
-  borderTopLeftRadius: 8, 
-  borderTopRightRadius: 8,  
-  width: '100%',  
-  flexDirection: 'row',
-  alignItems: 'center',
-},
+  topCard: {
+    flex: 1,
+    paddingRight: 12,
+  },
+  topRightCard: {
+    justifyContent: "flex-start",
+    alignItems: "flex-end",
+  },
+  topLeftCard: {
+    flex: 1,
+  },
+  bottomCard: {
+    flexDirection: "row",
+    marginTop: "auto", 
+    justifyContent: "space-between",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+    paddingTop: 8,
+  }
 });
 
 export default TaskCard;

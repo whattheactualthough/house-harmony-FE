@@ -8,8 +8,8 @@ const fontFamily = Platform.select({
 
 const typography = {
   heading: {
-    fontSize: 22,
-    fontWeight: '750',
+    fontSize: 15,
+    fontWeight: '600',
     fontFamily,
     color: colors.textDark,
   },
