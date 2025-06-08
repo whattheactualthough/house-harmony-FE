@@ -229,22 +229,22 @@ export const mockGetTasksById = (id) => {
    task_desirability_level: { level: 'Low', points: 25 }
  }, {
    id: 3,
-   task_name: 'take the bins out ',
-   description: '',
+   task_name: 'hoover ',
+   description: 'there are new hoover bags in th ecoat cuboard :)',
    is_urgent: false,
-   due_date: null,
+   due_date: '2025-06-15',
    task_specific_date: '2025-06-04',
    is_recurring: true,
    recurring_frequency: 7,
    created_at: '2025-06-02T11:03:42.639656+00:00',
    updated_at: '2025-06-02T11:03:42.639656',
    users: { user_name: 'Kiran' },
-   rooms: { room_name: 'kitchen' },
+   rooms: { room_name: 'living room' },
    status: { description: 'up for grabs' },
    task_desirability_level: { level: 'Low', points: 25 }
  }, {
    id: 4,
-   task_name: 'take the bins out ',
+   task_name: 'clean bath ',
    description: '',
    is_urgent: false,
    due_date: null,
@@ -254,7 +254,7 @@ export const mockGetTasksById = (id) => {
    created_at: '2025-06-02T11:03:42.639656+00:00',
    updated_at: '2025-06-02T11:03:42.639656',
    users: { user_name: 'Kiran' },
-   rooms: { room_name: 'kitchen' },
+   rooms: { room_name: 'bathroom' },
    status: { description: 'up for grabs' },
    task_desirability_level: { level: 'Low', points: 25 }
  }]
