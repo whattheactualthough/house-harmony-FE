@@ -3,8 +3,9 @@
 // status can be changed if assigned to user
 // as status is updated to complete points for assigned user are updated on profile, homepage, leaderboard
 // to do - add axios functionality for status patch in onStatusChange function
-// add user feedback on status change
+// add user feedback on status change haptics, scale, task moves to correct list
 
+import * as Haptics from 'expo-haptics';
 import { StyleSheet, Text, View } from "react-native";
 import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
@@ -13,10 +14,12 @@ import getRoomIcons from "../utils";
 function TaskCard({ task}) {
 const userId = 2;
 
+const onComplete = ()=> {
+  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
+  console.log(`${task.id} : done`)
+}
 
   return (
-    // left: title with icon, description, status
-    // right: assigned to, points given
     <View style={styles.container}>
         <View style = {styles.taskHeader}>
         {getRoomIcons(task.rooms.room_name)}
@@ -49,7 +52,7 @@ const userId = 2;
   status={task.status.description}
   claimedByUser={userId}
   onClaim={() => console.log(`Claim task ${task.id}`)}
-  onComplete={() => console.log(`${task.id} : done`)}
+  onComplete={onComplete}
   onStatusChange={() => console.log(`${task.id}status: ${task.status.description}`)}
   task={task}
   />
