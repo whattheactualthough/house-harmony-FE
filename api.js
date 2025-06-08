@@ -225,7 +225,7 @@ export const mockGetTasksById = (id) => {
    updated_at: '2025-06-02T11:03:42.639656',
    users: { user_name: 'Kiran' },
    rooms: { room_name: 'kitchen' },
-   status: { description: 'up for grabs' },
+   status: { description: 'claimed' },
    task_desirability_level: { level: 'Low', points: 25 }
  }, {
    id: 3,
@@ -240,7 +240,7 @@ export const mockGetTasksById = (id) => {
    updated_at: '2025-06-02T11:03:42.639656',
    users: { user_name: 'Kiran' },
    rooms: { room_name: 'living room' },
-   status: { description: 'up for grabs' },
+   status: { description: 'claimed' },
    task_desirability_level: { level: 'Low', points: 25 }
  }, {
    id: 4,
@@ -255,7 +255,7 @@ export const mockGetTasksById = (id) => {
    updated_at: '2025-06-02T11:03:42.639656',
    users: { user_name: 'Kiran' },
    rooms: { room_name: 'bathroom' },
-   status: { description: 'up for grabs' },
+   status: { description: 'claimed' },
    task_desirability_level: { level: 'Low', points: 25 }
  }]
 });

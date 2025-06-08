@@ -5,11 +5,9 @@ import { mockGetTasksById, mockGetUserById } from "../api";
 import TaskCard from "../components/TaskCard";
 import UserCard from "../components/UserCard";
 
-
 export default function UserPage() {
  const [user, setUser] = useState(null);
  const [tasks, setTasks] = useState(null);
-
 
  useEffect(() => {
    mockGetUserById(2).then(({ data }) => {
