@@ -1,3 +1,12 @@
+const mockPointsData = {
+  1: { userId: 1, totalPoints: 150 }, // Kiran
+  3: { userId: 3, totalPoints: 225 }, // Lucy 
+  6: { userId: 6, totalPoints: 89 },  // Gustavo
+  7: { userId: 7, totalPoints: 178 }, // Yasin
+  8: { userId: 8, totalPoints: 93 },  // Louie
+};
+
+
 export const mockGetTasks = () => {
  return Promise.resolve({
    data: [{
@@ -196,11 +205,10 @@ export const mockGetTasksByRoom = (id) => {
 }
 
 export const mockGetPointsById = (id) => {
-    return Promise.resolve({
-       userId: 2,
-       totalPoints: 50
-    })
+  const userPoints = mockPointsData[id];
+  return Promise.resolve(userPoints || { userId: id, totalPoints: 0 });
 }
+
 
 export const mockGetTasksById = (id) => {
  return Promise.resolve({
