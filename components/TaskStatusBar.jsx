@@ -1,7 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from "../styles/colors";
 
-export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim }) {
+export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim, onTakePhoto }) {
   if (task.status.description === 'up for grabs') {
     return (
       <TouchableOpacity style={styles.button} onPress={() => onClaim(task.id)}>
@@ -11,32 +11,56 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim 
   }
 
   if (task.status.description === 'claimed') {
-    return  <TouchableOpacity
-      style={styles.button}
-      onPress={() => onStatusChange(task.id, 'Complete')}
-    >
-      <Text style={styles.buttonText}>complete this task</Text>
-    </TouchableOpacity>
+    return (
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => onStatusChange(task.id, 'Complete')}
+        >
+          <Text style={styles.buttonText}>Complete task</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={styles.photoButton}
+          onPress={onTakePhoto}
+        >
+          <Text style={styles.buttonText}>Take photo</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  } else if (task.status.description === 'complete') {
+    return (
+      <Text style={styles.completeText}>✓ Completed</Text>
+    );
+  }
 
-  } else {
-return 
-}
-
-  
+  return null;
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 8,
+  },
   button: {
     backgroundColor: colors.primary,
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 4,
-    marginTop: 8,
+    alignSelf: 'flex-start',
+  },
+  photoButton: {
+    backgroundColor: colors.secondary,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
     alignSelf: 'flex-start',
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 12,
   },
   completeText: {
     marginTop: 8,
