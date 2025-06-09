@@ -20,7 +20,7 @@ export const mockGetTasks = () => {
    recurring_frequency: 7,
    created_at: '2025-06-02T11:03:42.639656+00:00',
    updated_at: '2025-06-02T11:03:42.639656',
-   users: { user_name: 'Kiran' },
+   users: { user_name: 'kiran' },
    rooms: { room_name: 'kitchen' },
    status: { description: 'up for grabs' },
    task_desirability_level: { level: 'Low', points: 25 }
@@ -260,5 +260,16 @@ export const mockGetTasksById = (id) => {
  }]
 });
 }
+
+export const mockUpdateTaskStatus = (taskId, statusId) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`Task ${taskId} updated to status ${statusId}`);
+      resolve({ id: taskId, status_id: statusId });
+    }, 500);
+  });
+};
+
+
 
 
