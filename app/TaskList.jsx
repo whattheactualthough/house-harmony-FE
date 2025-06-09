@@ -1,20 +1,22 @@
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
-import { Text } from "react-native-web";
-import { mockGetTasks } from "../api";
+import { ScrollView, Text } from "react-native-web";
+import { fetchTasksForGroup } from "../api";
 import TaskCard from "../components/TaskCard";
 import CreateTask from "./CreateTask";
 
 
 
 export default function TaskList() {
-  const [tasks, setTasks] = useState(null);
+  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    mockGetTasks().then(({ data }) => {
-      setTasks(data);
-    });
+    // mockGetTasks().then(({ data }) => {
+    //   setTasks(data);
+    // });
+    fetchTasksForGroup().then(({data})=>{
+      setTasks(data)
+    })
   }, []);
 
   if (!tasks) {
@@ -26,7 +28,7 @@ export default function TaskList() {
   }
 
   return (
-    <View>
+    <ScrollView>
       <Link href="/HomePage" accessibilityLabel="go back to homepage">
         home page
       </Link>
@@ -38,6 +40,6 @@ export default function TaskList() {
           })}
         </ol>
         <Link href="/CreateTask" accessibilityLabel="create a new task">create new task</Link>
-    </View>
+    </ScrollView>
   );
 }

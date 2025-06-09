@@ -1,10 +1,12 @@
 import axios from 'axios';
  
 const houseHarmonyAPI = axios.create({
-  baseURL: "https://house-harmony.onrender.com/api"
+  //baseURL: "https://house-harmony.onrender.com/api/"
+  //above is test database below is production switch by commenting out one 
+  baseURL: "https://house-harmony-hnxr.onrender.com/api/"
 })
 export const fetchTasksForGroup = () => {
-  return houseHarmonyAPI.get("/tasks").then(({tasks})=>{
+  return houseHarmonyAPI.get("/tasks").then((tasks)=>{
     return tasks
   })
 }
@@ -32,7 +34,7 @@ export const fetchRoomById = (id) => {
 export const fetchUsers = () => {
   return houseHarmonyAPI
   .get("/users")
-  .then(({data})=>{
+  .then((data)=>{
     return data
   })
 }
@@ -53,14 +55,14 @@ export const fetchRooms = () => {
 export const fetchTasksByUser = (id) => {
   return houseHarmonyAPI
   .get(`/tasks/${id}`)
-  .then(({data})=>{
+  .then((data)=>{
     return data
   })
 }
 export const fetchUserPoints = (id) => {
   return houseHarmonyAPI
   .get(`/points/${id}`)
-  .then(({data})=>{
+  .then((data)=>{
     return data
   })
 }
