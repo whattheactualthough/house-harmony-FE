@@ -297,3 +297,34 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
+
+// import React from 'react';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// export default function Example() {
+//   return (
+//     <MaterialCommunityIcons name="podium" color="#000" size={24} /> podium 
+
+// import React from 'react';
+// import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
+// export default function Example() {
+//   return (
+//     <MaterialCommunityIcons name="podium-gold" color="#000" size={24} />
+//   )
+// } podium-silver, podium-bronze
+
+// import React from 'react';
+// import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+
+// export default function Example() {
+//   return (
+//     <SimpleLineIcons name="badge" color="#000" size={24} />
+//   )
+// }
+
+
+//   )
+
+
+// }

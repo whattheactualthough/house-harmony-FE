@@ -1,5 +1,5 @@
 // data - title, room, description, number of points (desirability level), due date / no of days to complete, status,
-// link - take a photo and upload to task
+// link - take a photo and upload to task - only visible on complete?
 // status can be changed if assigned to user
 // as status is updated to complete points for assigned user are updated on profile, homepage, leaderboard
 // to do - add axios functionality for status patch in onStatusChange function
@@ -11,12 +11,16 @@ import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
 import getRoomIcons from "../utils";
 
+
 function TaskCard({ task}) {
 const userId = 2;
+// const [localStatus, setLocalStatus ] = useState(tasks.task_id.status) // not right
+
 
 const onComplete = ()=> {
   Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
   console.log(`${task.id} : done`)
+  // make a button to be visible oncomplete to upload a photo
 }
 
   return (
