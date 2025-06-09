@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -14,26 +15,29 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
+  const queryClient = new QueryClient();
 
   if (!loaded) {
     return null;
   }
 
   return (
-    <UserProvider>
-      <TasksProvider>
-        <View style={styles.container}>
-          <View style={styles.content}>
-            <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="+not-found" />
-            </Stack>
+    <QueryClientProvider client={queryClient}>
+      <UserProvider>
+        <TasksProvider>
+          <View style={styles.container}>
+            <View style={styles.content}>
+              <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" />
+              </Stack>
+            </View>
+            <FooterTabs />
+            <StatusBar style="auto" />
           </View>
-          <FooterTabs />
-          <StatusBar style="auto" />
-        </View>
-      </TasksProvider>
-    </UserProvider>
+        </TasksProvider>
+      </UserProvider>
+    </QueryClientProvider>
   );
 }
 

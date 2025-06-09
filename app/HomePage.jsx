@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
 // data - user data & profile pic
 // data - current points, place on leaderboard, latest badges
 // data - task list of claimed tasks ordered by urgency / status - can change task status here
+// clickable - complete task, upload photo
 {
   /* <View>
       <Link href="/TaskList" accessibilityLabel = "go to full task list">all tasks</Link>
