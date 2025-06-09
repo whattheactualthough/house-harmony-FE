@@ -1,3 +1,94 @@
+import axios from 'axios';
+ 
+const houseHarmonyAPI = axios.create({
+  baseURL: "https://house-harmony.onrender.com/api"
+})
+export const fetchTasksForGroup = () => {
+  return houseHarmonyAPI.get("/tasks").then(({tasks})=>{
+    return tasks
+  })
+}
+export const addNewTask = (task) => {
+  return houseHarmonyAPI
+  .post("/tasks", {task})
+  .then(({data})=> {
+    return data
+  })
+}
+export const deleteTask = (id) =>{
+  return houseHarmonyAPI
+  .delete(`/tasks/${id}`)
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchRoomById = (id) => {
+  return houseHarmonyAPI
+  .get(`/tasks/rooms/${id}`)
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchUsers = () => {
+  return houseHarmonyAPI
+  .get("/users")
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchStatus = () => {
+  return houseHarmonyAPI
+  .get("/status")
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchRooms = () => {
+  return houseHarmonyAPI
+  .get("/rooms")
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchTasksByUser = (id) => {
+  return houseHarmonyAPI
+  .get(`/tasks/${id}`)
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchUserPoints = (id) => {
+  return houseHarmonyAPI
+  .get(`/points/${id}`)
+  .then(({data})=>{
+    return data
+  })
+}
+export const updateTaskStatus = (taskId, status_id) => {
+  return houseHarmonyAPI
+  .patch(`/tasks/${taskId}/status`, {status_id})
+  .then(({data})=>{
+    return data
+  })
+}
+export const updateTask = (taskId, userId) => {
+  return houseHarmonyAPI
+  .patch(`/tasks/${taskId}`, {assigned_to_user_id: userId})
+  .then(({data})=>{
+    return data
+  })
+}
+export const fetchImages = () => {
+  return houseHarmonyAPI
+  .get("/images")
+  .then(({data})=> {
+    return data
+  })
+}
+
+
+
+
 const mockPointsData = {
   1: { userId: 1, totalPoints: 150 }, // Kiran
   3: { userId: 3, totalPoints: 225 }, // Lucy 
