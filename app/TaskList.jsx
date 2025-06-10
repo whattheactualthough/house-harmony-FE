@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, View } from "expo-router";
 import { useEffect, useState } from "react";
 import { ScrollView, Text } from "react-native-web";
 import { fetchTasksForGroup } from "../api";
