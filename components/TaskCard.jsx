@@ -7,9 +7,9 @@
 
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Modal } from "react-native";
-import TaskStatusBar from "../components/TaskStatusBar";
+import { Modal, StyleSheet, Text, View } from "react-native";
 import PhotoHandler from "../components/PhotoHandler";
+import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
 import getRoomIcons from "../utils";
 
@@ -45,12 +45,12 @@ const onClosePhotoHandler = () => {
 
   return (
     <View style={styles.container}>
-        <View style = {styles.taskHeader}>
+      <View style={styles.taskHeader}>
         {getRoomIcons(task.rooms.room_name)}
         <Text style={[styles.taskHeaderText, typography.heading]}>
           {task.rooms.room_name}
         </Text>
-        </View>
+      </View>
       <View>
         <View style={styles.topCard}>
           <View style={styles.topLeftCard}>
@@ -73,15 +73,16 @@ const onClosePhotoHandler = () => {
         </Text>
 
         <TaskStatusBar
-  status={task.status.description}
-  claimedByUser={userId}
-  onClaim={() => console.log(`Claim task ${task.id}`)}
-  onComplete={onComplete}
-  onTakePhoto={onTakePhoto}
-  onStatusChange={() => console.log(`${task.id}status: ${task.status.description}`)}
-  task={task}
-  />
-    </View>
+          status={task.status.description}
+          claimedByUser={userId}
+          onPress={onPressHandler}
+          onTakePhoto={onTakePhoto}
+  onStatusChange={() =>
+            console.log(`${task.id}status: ${task.status.description}`)
+          }
+          task={task}
+        />
+      </View>
 
     <Modal
       visible={showPhotoHandler}
@@ -135,12 +136,12 @@ const styles = StyleSheet.create({
   },
   bottomCard: {
     flexDirection: "row",
-    marginTop: "auto", 
+    marginTop: "auto",
     justifyContent: "space-between",
     borderTopWidth: 1,
     borderTopColor: "#eee",
     paddingTop: 8,
-  }
+  },
 });
 
 export default TaskCard;

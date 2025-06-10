@@ -21,13 +21,13 @@ export default function TasksByRoom() {
     <View>
       <View style={{ flex: 1 }}>
         <TaskNav />
-        <ol>
+        <View>
           {tasks.map((task) => {
             console.log(task);
             const key = task.id;
             return <TaskCard key={key} task={task} />;
           })}
-        </ol>
+        </View>
       </View>
     </View>
   );

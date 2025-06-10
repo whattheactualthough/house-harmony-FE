@@ -7,7 +7,7 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim,
   if (task.status.description === '1') { //for some reason on production database it wants '1' but on test database it wants the actual description.
 
     return (
-      <TouchableOpacity style={styles.button} onPress={() => onClaim(task.id)}>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>Claim this task</Text>
       </TouchableOpacity>
     );
@@ -41,7 +41,7 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim,
   if (task.status.description === '2') {
     return  <TouchableOpacity
       style={styles.button}
-      onPress={() => onStatusChange(task.id, 'Complete')}
+      onPress={onPress}
     >
       <Text style={styles.buttonText}>complete this task</Text>
     </TouchableOpacity>
@@ -51,7 +51,6 @@ return
 }
 
 
-  return null;
 }
 
 const styles = StyleSheet.create({
