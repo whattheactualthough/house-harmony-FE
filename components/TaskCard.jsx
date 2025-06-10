@@ -19,6 +19,10 @@ const userId = 2;
 const [showPhotoHandler, setShowPhotoHandler] = useState(false);
 // const [localStatus, setLocalStatus ] = useState(tasks.task_id.status) // not right
 
+const onPressHandler = () => {
+  const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
+  updateTaskStatus(task.id, newStatusId);
+};
 
 
 const onComplete = ()=> {
