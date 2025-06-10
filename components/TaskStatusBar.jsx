@@ -1,14 +1,18 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from "../styles/colors";
 
+
 export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim, onTakePhoto }) {
-  if (task.status.description === 'up for grabs') {
+//   if (task.status.description === 'up for grabs') {
+  if (task.status.description === '1') { //for some reason on production database it wants '1' but on test database it wants the actual description.
+
     return (
       <TouchableOpacity style={styles.button} onPress={() => onClaim(task.id)}>
         <Text style={styles.buttonText}>Claim this task</Text>
       </TouchableOpacity>
     );
   }
+
 
   if (task.status.description === 'claimed') {
     return (
@@ -33,6 +37,19 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim,
       <Text style={styles.completeText}>✓ Completed</Text>
     );
   }
+
+  if (task.status.description === '2') {
+    return  <TouchableOpacity
+      style={styles.button}
+      onPress={() => onStatusChange(task.id, 'Complete')}
+    >
+      <Text style={styles.buttonText}>complete this task</Text>
+    </TouchableOpacity>
+
+  } else {
+return 
+}
+
 
   return null;
 }
