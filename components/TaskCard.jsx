@@ -5,32 +5,42 @@
 // to do - add axios functionality for status patch in onStatusChange function
 // add user feedback on status change haptics, scale, task moves to correct list
 
-import * as Haptics from 'expo-haptics';
+import { useTasksContext } from "@/app/contexts/Tasks";
+import * as Haptics from "expo-haptics";
 import { StyleSheet, Text, View } from "react-native";
 import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
 import getRoomIcons from "../utils";
 
+function TaskCard({ task }) {
+  const { tasks, updateTaskStatus } = useTasksContext();
+  console.log(task.status.description)
+  const userId = 2; // update to user when we have accounts set up 
+  
+  const onPressHandler = () => {
+  const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
+  updateTaskStatus(task.id, newStatusId);
+};
 
-function TaskCard({ task}) {
-const userId = 2;
-// const [localStatus, setLocalStatus ] = useState(tasks.task_id.status) // not right
+  const onClaim = () => {
+    updateTaskStatus(task.id, "claimed", "user1");
+  };
 
-
-const onComplete = ()=> {
-  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
-  console.log(`${task.id} : done`)
-  // make a button to be visible oncomplete to upload a photo
-}
+  const onComplete = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult!
+    console.log(`${task.id} : done`);
+    updateTaskStatus(task.id, "complete");
+    // make a button to be visible oncomplete to upload a photo
+  };
 
   return (
     <View style={styles.container}>
-        <View style = {styles.taskHeader}>
+      <View style={styles.taskHeader}>
         {getRoomIcons(task.rooms.room_name)}
         <Text style={[styles.taskHeaderText, typography.heading]}>
           {task.rooms.room_name}
         </Text>
-        </View>
+      </View>
       <View>
         <View style={styles.topCard}>
           <View style={styles.topLeftCard}>
@@ -53,14 +63,15 @@ const onComplete = ()=> {
         </Text>
 
         <TaskStatusBar
-  status={task.status.description}
-  claimedByUser={userId}
-  onClaim={() => console.log(`Claim task ${task.id}`)}
-  onComplete={onComplete}
-  onStatusChange={() => console.log(`${task.id}status: ${task.status.description}`)}
-  task={task}
-  />
-    </View>
+          status={task.status.description}
+          claimedByUser={userId}
+          onPress={onPressHandler}
+          onStatusChange={() =>
+            console.log(`${task.id}status: ${task.status.description}`)
+          }
+          task={task}
+        />
+      </View>
     </View>
   );
 }
@@ -102,12 +113,12 @@ const styles = StyleSheet.create({
   },
   bottomCard: {
     flexDirection: "row",
-    marginTop: "auto", 
+    marginTop: "auto",
     justifyContent: "space-between",
     borderTopWidth: 1,
     borderTopColor: "#eee",
     paddingTop: 8,
-  }
+  },
 });
 
 export default TaskCard;

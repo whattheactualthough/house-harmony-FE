@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from "../styles/colors";
 
-export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim }) {
+export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim, onPress }) {
   if (task.status.description === 'up for grabs') {
     return (
-      <TouchableOpacity style={styles.button} onPress={() => onClaim(task.id)}>
+      <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>Claim this task</Text>
       </TouchableOpacity>
     );
@@ -13,7 +13,7 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim 
   if (task.status.description === 'claimed') {
     return  <TouchableOpacity
       style={styles.button}
-      onPress={() => onStatusChange(task.id, 'Complete')}
+      onPress={onPress}
     >
       <Text style={styles.buttonText}>complete this task</Text>
     </TouchableOpacity>
