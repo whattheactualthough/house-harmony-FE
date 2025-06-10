@@ -5,33 +5,43 @@
 // to do - add axios functionality for status patch in onStatusChange function
 // add user feedback on status change haptics, scale, task moves to correct list
 
-import { useTasksContext } from "@/app/contexts/Tasks";
-import * as Haptics from "expo-haptics";
-import { StyleSheet, Text, View } from "react-native";
+import * as Haptics from 'expo-haptics';
+import React, { useState } from 'react';
+import { Modal, StyleSheet, Text, View } from "react-native";
+import PhotoHandler from "../components/PhotoHandler";
 import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
 import getRoomIcons from "../utils";
 
-function TaskCard({ task }) {
-  const { tasks, updateTaskStatus } = useTasksContext();
-  console.log(task.status.description)
-  const userId = 2; // update to user when we have accounts set up 
-  
-  const onPressHandler = () => {
-  const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
-  updateTaskStatus(task.id, newStatusId);
-};
 
-  const onClaim = () => {
-    updateTaskStatus(task.id, "claimed", "user1");
-  };
+function TaskCard({ task}) {
+const userId = 2;
+const [showPhotoHandler, setShowPhotoHandler] = useState(false);
+// const [localStatus, setLocalStatus ] = useState(tasks.task_id.status) // not right
 
-  const onComplete = () => {
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult!
-    console.log(`${task.id} : done`);
-    updateTaskStatus(task.id, "complete");
-    // make a button to be visible oncomplete to upload a photo
-  };
+
+
+const onComplete = ()=> {
+  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
+  console.log(`${task.id} : done`)
+  // make a button to be visible oncomplete to upload a photo
+}
+
+const onTakePhoto = () => {
+  setShowPhotoHandler(true);
+}
+
+const onPhotoTaken = (taskId, imageUri) => {
+  console.log(`Photo taken for task ${taskId}:`, imageUri);
+  // Here you would typically upload the photo to your backend
+  // and then mark the task as complete
+  onComplete();
+  setShowPhotoHandler(false);
+}
+
+const onClosePhotoHandler = () => {
+  setShowPhotoHandler(false);
+}
 
   return (
     <View style={styles.container}>
@@ -66,12 +76,25 @@ function TaskCard({ task }) {
           status={task.status.description}
           claimedByUser={userId}
           onPress={onPressHandler}
-          onStatusChange={() =>
+          onTakePhoto={onTakePhoto}
+  onStatusChange={() =>
             console.log(`${task.id}status: ${task.status.description}`)
           }
           task={task}
         />
       </View>
+
+    <Modal
+      visible={showPhotoHandler}
+      animationType="slide"
+      presentationStyle="pageSheet"
+    >
+      <PhotoHandler
+        taskId={task.id}
+        onPhotoTaken={onPhotoTaken}
+        onClose={onClosePhotoHandler}
+      />
+    </Modal>
     </View>
   );
 }

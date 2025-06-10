@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { mockGetPointsById, mockGetUsers } from "../api";
+import { fetchUserPoints, fetchUsers } from "../api";
 
 export default function LeaderBoard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -10,15 +10,17 @@ export default function LeaderBoard() {
     const fetchLeaderboardData = async () => {
       try {
         
-        const usersResponse = await mockGetUsers();
+        const usersResponse = await fetchUsers();
         const users = usersResponse.data;
+        
 
         
         const leaderboardPromises = users.map(async (user) => {
-          const pointsResponse = await mockGetPointsById(user.id);
+          const pointsResponse = await fetchUserPoints(user.id)
+          console.log(pointsResponse.data["Total Points"])
           return {
             ...user,
-            totalPoints: pointsResponse.totalPoints || 0
+            totalPoints: pointsResponse.data["Total Points"] || 0
           };
         });
 
