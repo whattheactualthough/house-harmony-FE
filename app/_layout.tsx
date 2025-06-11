@@ -1,17 +1,18 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
-import "react-native-reanimated";
-import FooterTabs from "../components/FooterTabs";
-import TaskNav from "../components/TaskNav";
-import { TasksProvider } from "./contexts/TasksContext";
-import { UserProvider } from "./contexts/UserContext";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, View } from 'react-native';
+import 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import FooterTabs from '../components/FooterTabs';
+import TaskNav from '../components/TaskNav';
+import { TasksProvider } from './contexts/TasksContext';
+import { UserProvider } from './contexts/UserContext';
 
 export default function RootLayout() {
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
   const queryClient = new QueryClient();
 
@@ -23,7 +24,7 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <UserProvider>
         <TasksProvider>
-          <View style={styles.container}>
+          <SafeAreaView style={styles.container}>
             <View style={styles.content}>
               <TaskNav />
               <Stack>
@@ -40,7 +41,7 @@ export default function RootLayout() {
             </View>
             <FooterTabs />
             <StatusBar style="auto" />
-          </View>
+          </SafeAreaView>
         </TasksProvider>
       </UserProvider>
     </QueryClientProvider>
@@ -50,7 +51,7 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   content: {
     flex: 1,

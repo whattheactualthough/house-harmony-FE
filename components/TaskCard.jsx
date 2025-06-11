@@ -5,29 +5,27 @@
 // to do - add axios functionality for status patch in onStatusChange function
 // add user feedback on status change haptics, scale, task moves to correct list
 
-import * as Haptics from "expo-haptics";
-import { useState } from "react";
-import { Modal, StyleSheet, Text, View } from "react-native";
-import PhotoHandler from "../components/PhotoHandler";
-import TaskStatusBar from "../components/TaskStatusBar";
-import colors from "../styles/colors";
-import typography from "../styles/typography";
-import { getRoomIcons, getRoomNames } from "../utils";
+import * as Haptics from 'expo-haptics';
+import { useState } from 'react';
+import { Modal, StyleSheet, Text, View } from 'react-native';
+import PhotoHandler from '../components/PhotoHandler';
+import TaskStatusBar from '../components/TaskStatusBar';
+import colors from '../styles/colors';
+import typography from '../styles/typography';
+import { assignPoints, getRoomIcons, getRoomNames } from '../utils';
 
-import { useTasks } from "../app/contexts/TasksContext";
-import { useUser } from "../app/contexts/UserContext";
+import { useTasks } from '../app/contexts/TasksContext';
+import { useUser } from '../app/contexts/UserContext';
 
 function TaskCard({ task }) {
-  const { claimTask, updateTaskStatusContext} = useTasks();
-  const {user} = useUser()
+  const { claimTask, updateTaskStatusContext } = useTasks();
+  const { user } = useUser();
   const [showPhotoHandler, setShowPhotoHandler] = useState(false);
 
   const onPressHandler = () => {
-    const newStatusId =
-      task.status.description === "unclaimed" ? "claimed" : "completed";
+    const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
     updateTaskStatusContext(task.id, newStatusId);
   };
-
 
   const onComplete = () => {
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult!
@@ -36,7 +34,7 @@ function TaskCard({ task }) {
   };
 
   function onClaim() {
-    return claimTask(task.id, user.id)
+    return claimTask(task.id, user.id);
   }
 
   const onTakePhoto = () => {
@@ -66,25 +64,23 @@ function TaskCard({ task }) {
       <View>
         <View style={styles.topCard}>
           <View style={styles.topLeftCard}>
-            <Text style={{ marginTop: 16, fontWeight: "bold", paddingHorizontal: 16}}>{task.task_name}</Text>
-            <Text style={{paddingVertical: 16, paddingHorizontal: 16}}>{task.description}</Text>
+            <Text style={{ marginTop: 16, fontWeight: 'bold', paddingHorizontal: 16 }}>
+              {task.task_name}
+            </Text>
+            <Text style={{ paddingHorizontal: 16 }}>{task.description}</Text>
           </View>
           <View style={styles.topRightCard}>
-            <Text style={styles.points}>{user.points}</Text> 
+            <Text style={styles.points}>{assignPoints(task.task_name)}</Text>
             <Text>points</Text>
             <Text style={styles.assignedTo}>
-              {user.user_name
-                ? `Assigned to: ${user.user_name}`
-                : "Unassigned"}
+              {task.users.user_name ? `Assigned to: ${user.user_name}` : 'Unassigned'}
             </Text>
           </View>
         </View>
       </View>
 
       <View style={styles.bottomCard}>
-        <Text>
-          {task.task_specific_date ? task.task_specific_date : task.due_date}
-        </Text>
+        <Text>{task.task_specific_date ? task.task_specific_date : task.due_date}</Text>
 
         <TaskStatusBar
           status={task.status.description}
@@ -95,16 +91,8 @@ function TaskCard({ task }) {
         />
       </View>
 
-      <Modal
-        visible={showPhotoHandler}
-        animationType="slide"
-        presentationStyle="pageSheet"
-      >
-        <PhotoHandler
-          taskId={task.id}
-          onPhotoTaken={onPhotoTaken}
-          onClose={onClosePhotoHandler}
-        />
+      <Modal visible={showPhotoHandler} animationType="slide" presentationStyle="pageSheet">
+        <PhotoHandler taskId={task.id} onPhotoTaken={onPhotoTaken} onClose={onClosePhotoHandler} />
       </Modal>
     </View>
   );
@@ -113,60 +101,60 @@ function TaskCard({ task }) {
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: "#65CCB8",
+    borderColor: '#65CCB8',
     borderRadius: 8,
     marginVertical: 10,
-    width: "90%",
-    alignSelf: "center",
-    overflow: "hidden",
-    flexDirection: "column",
+    width: '90%',
+    alignSelf: 'center',
+    overflow: 'hidden',
+    flexDirection: 'column',
   },
   taskHeaderText: {
     marginLeft: 6,
   },
   taskHeader: {
-    backgroundColor: "#F2F2F2",
+    backgroundColor: '#F2F2F2',
     paddingVertical: 7,
     paddingHorizontal: 12,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   topCard: {
-    flex: 1,
+    // flex: 1,
     paddingRight: 12,
   },
   topRightCard: {
-    justifyContent: "flex-start",
-    alignItems: "flex-end",
-    paddingRight: 20
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    paddingRight: 20,
   },
   topLeftCard: {
     flex: 1,
   },
   bottomCard: {
-    flexDirection: "row",
-    marginTop: "auto",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    marginTop: 'auto',
+    justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: "#eee",
+    borderTopColor: '#eee',
     paddingTop: 8,
-    paddingRight: 20
+    paddingRight: 20,
   },
-  points:{
-    fontSize:30,
+  points: {
+    fontSize: 30,
     // paddingBottom: 8,
     paddingLeft: 8,
-    color: colors.primary
+    color: colors.primary,
   },
-  pointsText:{
-    paddingBottom: 10
+  pointsText: {
+    paddingBottom: 10,
   },
-  assignedTo:{
-    paddingVertical: 15
-  }
+  assignedTo: {
+    paddingVertical: 15,
+  },
 });
 
 export default TaskCard;

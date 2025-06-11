@@ -1,44 +1,42 @@
-import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { BeatLoader } from "react-spinners";
-import { fetchUserPoints, fetchUsers } from "../api";
-import colors from "../styles/colors";
+import { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { fetchUserPoints, fetchUsers } from '../api';
+import { useUser } from './contexts/UserContext';
 
 export default function LeaderBoard() {
+  const { user } = useUser();
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLeaderboardData = async () => {
       try {
-        
         const usersResponse = await fetchUsers();
         const users = usersResponse.data;
-        
+        const mockUsers = [...users.filter((user) => user.user_name !== 'Kiran'), user];
 
-        
-        const leaderboardPromises = users.map(async (user) => {
-          const pointsResponse = await fetchUserPoints(user.id)
-          console.log(pointsResponse.data["Total Points"])
+        const leaderboardPromises = mockUsers.map(async (user) => {
+          const pointsResponse = await fetchUserPoints(user.id);
+          console.log(pointsResponse.data['Total Points']);
           return {
             ...user,
-            totalPoints: pointsResponse.data["Total Points"] || 0
+            totalPoints:
+              user.user_name === 'Kiran' ? user.points : pointsResponse.data['Total Points'] || 0,
           };
         });
 
         const leaderboardResults = await Promise.all(leaderboardPromises);
-        
-        
+
         const sortedLeaderboard = leaderboardResults
           .sort((a, b) => b.totalPoints - a.totalPoints)
           .map((user, index) => ({
             ...user,
-            rank: index + 1
+            rank: index + 1,
           }));
 
         setLeaderboardData(sortedLeaderboard);
       } catch (error) {
-        console.error("Error fetching leaderboard data:", error);
+        console.error('Error fetching leaderboard data:', error);
       } finally {
         setLoading(false);
       }
@@ -49,37 +47,46 @@ export default function LeaderBoard() {
 
   const getRankEmoji = (rank) => {
     switch (rank) {
-      case 1: return "🥇";
-      case 2: return "🥈";
-      case 3: return "🥉";
-      default: return "🏅";
+      case 1:
+        return '🥇';
+      case 2:
+        return '🥈';
+      case 3:
+        return '🥉';
+      default:
+        return '🏅';
     }
   };
 
   const getRankStyle = (rank) => {
     switch (rank) {
-      case 1: return styles.firstPlace;
-      case 2: return styles.secondPlace;
-      case 3: return styles.thirdPlace;
-      default: return styles.otherPlace;
+      case 1:
+        return styles.firstPlace;
+      case 2:
+        return styles.secondPlace;
+      case 3:
+        return styles.thirdPlace;
+      default:
+        return styles.otherPlace;
     }
   };
 
   const getRankContainerStyle = (rank) => {
     switch (rank) {
-      case 1: return { ...styles.rankContainer, backgroundColor: '#fef3c7' };
-      case 2: return { ...styles.rankContainer, backgroundColor: '#f1f5f9' };
-      case 3: return { ...styles.rankContainer, backgroundColor: '#fed7aa' };
-      default: return styles.rankContainer;
+      case 1:
+        return { ...styles.rankContainer, backgroundColor: '#fef3c7' };
+      case 2:
+        return { ...styles.rankContainer, backgroundColor: '#f1f5f9' };
+      case 3:
+        return { ...styles.rankContainer, backgroundColor: '#fed7aa' };
+      default:
+        return styles.rankContainer;
     }
   };
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <BeatLoader
-        color={colors.primary}/>
-      </View>
+      <View style={styles.loadingContainer}>{/* <BeatLoader color={colors.primary} /> */}</View>
     );
   }
 
@@ -92,22 +99,17 @@ export default function LeaderBoard() {
 
       <ScrollView style={styles.leaderboardContainer}>
         {leaderboardData.map((user) => (
-          <View 
-            key={user.id} 
-            style={[styles.leaderboardItem, getRankStyle(user.rank)]}
-          >
+          <View key={user.id} style={[styles.leaderboardItem, getRankStyle(user.rank)]}>
             <View style={getRankContainerStyle(user.rank)}>
               <Text style={styles.rankEmoji}>{getRankEmoji(user.rank)}</Text>
               <Text style={styles.rankNumber}>#{user.rank}</Text>
             </View>
-            
+
             <View style={styles.userInfo}>
               <Text style={styles.userName}>{user.user_name}</Text>
-              {user.is_admin && (
-                <Text style={styles.adminBadge}>Admin</Text>
-              )}
+              {user.is_admin && <Text style={styles.adminBadge}>Admin</Text>}
             </View>
-            
+
             <View style={styles.pointsContainer}>
               <Text style={styles.points}>{user.totalPoints}</Text>
               <Text style={styles.pointsLabel}>points</Text>
@@ -119,14 +121,16 @@ export default function LeaderBoard() {
       {leaderboardData.length > 0 && (
         <View style={styles.statsContainer}>
           <Text style={styles.statsTitle}>House Stats</Text>
-          <Text style={styles.statsText}>
-            Total members: {leaderboardData.length}
-          </Text>
+          <Text style={styles.statsText}>Total members: {leaderboardData.length}</Text>
           <Text style={styles.statsText}>
             Total points earned: {leaderboardData.reduce((sum, user) => sum + user.totalPoints, 0)}
           </Text>
           <Text style={styles.statsText}>
-            Average points: {Math.round(leaderboardData.reduce((sum, user) => sum + user.totalPoints, 0) / leaderboardData.length)}
+            Average points:{' '}
+            {Math.round(
+              leaderboardData.reduce((sum, user) => sum + user.totalPoints, 0) /
+                leaderboardData.length
+            )}
           </Text>
         </View>
       )}
@@ -301,11 +305,11 @@ const styles = StyleSheet.create({
     color: '#64748b',
     fontWeight: '500',
   },
-    loadingContainer: {
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
 });
 
@@ -314,7 +318,7 @@ const styles = StyleSheet.create({
 
 // export default function Example() {
 //   return (
-//     <MaterialCommunityIcons name="podium" color="#000" size={24} /> podium 
+//     <MaterialCommunityIcons name="podium" color="#000" size={24} /> podium
 
 // import React from 'react';
 // import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -334,8 +338,6 @@ const styles = StyleSheet.create({
 //   )
 // }
 
-
 //   )
-
 
 // }

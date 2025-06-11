@@ -1,17 +1,15 @@
-import colors from "@/styles/colors";
-import { ScrollView, StyleSheet, View } from "react-native";
+import colors from '@/styles/colors';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { BeatLoader } from "react-spinners";
-import TaskCard from "../components/TaskCard";
-import UserCard from "../components/UserCard";
-import { useTasks } from "./contexts/TasksContext";
-import { useUser } from "./contexts/UserContext";
-
+import TaskCard from '../components/TaskCard';
+import UserCard from '../components/UserCard';
+import { useTasks } from './contexts/TasksContext';
+import { useUser } from './contexts/UserContext';
 
 export default function UserPage() {
-
   const { userTasks, isLoading } = useTasks();
-  console.log(userTasks)
-const {user} = useUser();
+  console.log(userTasks);
+  const { user } = useUser();
   // const tasksByUser = tasks?.filter(
   //   (task) =>
   //     task.users &&
@@ -21,25 +19,26 @@ const {user} = useUser();
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <BeatLoader
-        color={colors.primary}/>
-      </View>
+       <View style={styles.loadingContainer}>
+        <BeatLoader color={colors.primary} />
+        </View>
     );
   }
 
   return (
     <View style={styles.page}>
       <ScrollView style={styles.content}>
-      <View>
-        <UserCard key={2} user={user} />
-      </View>
-      <View>
-        {userTasks?.map((task) => {
-          const key = task.id;
-          return <TaskCard key={key} task={task} />;
-        })}
-      </View>
+        <View>
+          <UserCard key={2} user={user} />
+        </View>
+        <View>
+          {userTasks
+            ?.filter((task) => task.status.description === '2')
+            .map((task) => {
+              const key = task.id;
+              return <TaskCard key={key} task={task} />;
+            })}
+        </View>
       </ScrollView>
     </View>
   );
@@ -48,14 +47,14 @@ const {user} = useUser();
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     paddingHorizontal: 16,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
 });
 
