@@ -11,12 +11,11 @@ import { Modal, StyleSheet, Text, View } from "react-native";
 import PhotoHandler from "../components/PhotoHandler";
 import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
-import { getRoomIcons, getRoomNames } from "../utils";
+import { assignPoints, getRoomIcons, getRoomNames } from "../utils";
 
 function TaskCard({ task }) {
   const userId = 2;
   const [showPhotoHandler, setShowPhotoHandler] = useState(false);
-  console.log(task)
 
   const onPressHandler = () => {
     const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
@@ -61,21 +60,22 @@ function TaskCard({ task }) {
             <Text>{task.description}</Text>
           </View>
           <View style={styles.topRightCard}>
-            <Text>{task.task_desirability_level.points} points</Text>
+            
+            <Text>{assignPoints(task.task_name)} points</Text>
+             <Text>
+          {task.users.username ? `Assigned to: ${task.users.user_name}` : "Unassigned"}
+        </Text>
           </View>
         </View>
       </View>
 
       <View style={styles.bottomCard}>
-        <Text>
-          {task.users.username ? `Assigned to: ${task.users.user_name}` : "Unassigned"}
-        
-        </Text>
+       
 
         <Text>
           {task.task_specific_date ? task.task_specific_date : task.due_date}
         </Text>
-
+    
         <TaskStatusBar
           status={task.status.description}
           claimedByUser={userId}

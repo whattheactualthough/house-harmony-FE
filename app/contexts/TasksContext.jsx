@@ -36,8 +36,19 @@ export const TasksProvider=({children})=>{
     // add points to user here if new status change is complete
     // conditional feedback to user 
   };
+
+  const claimTask = (taskId, userId) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId
+          ? { ...task, assignedUser: userId, status: 'claimed' }
+          : task
+      )
+    );
+  };
+
 return (
-    <TasksContext.Provider value={{isLoading, tasks, setTasks, updateTaskStatusContext}}>
+    <TasksContext.Provider value={{isLoading, tasks, setTasks, updateTaskStatusContext, claimTask}}>
         {children}
     </TasksContext.Provider>
 )
