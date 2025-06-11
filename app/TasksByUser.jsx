@@ -24,12 +24,12 @@ export default function TasksByUser() {
         home page
       </Link>
       <Text>My Tasks</Text>
-      <ol>
+      <View>
         {tasks.map((task) => {
           const key = task.id;
           return <TaskCard key={key} task={task} />;
         })}
-      </ol>
+      </View>
     </View>
   );
 }
