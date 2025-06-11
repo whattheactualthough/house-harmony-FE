@@ -11,7 +11,6 @@ function UserProfile() {
   const [totalUsers, setTotalUsers] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // Hardcoded user ID for now (in real app, this would come from authentication)
   const currentUserId = 1;
 
   useEffect(() => {
