@@ -1,36 +1,32 @@
-import { useTasksContext } from "@/app/contexts/TasksContext";
-import { View } from "react-native";
-import { Text } from "react-native-web";
+import React, { useEffect, useState } from "react";
+import { Link } from "expo-router";
+import { View, Text } from "react-native";
 import TaskCard from "../components/TaskCard";
-import TaskNav from "../components/TaskNav";
+import { useTasksContext } from "../contexts/TasksContext";
 
 export default function TasksByRoom() {
-  const { tasks, updateTaskStatus } = useTasksContext();
+  const { tasks } = useTasksContext();
+  const [filtered, setFiltered] = useState([]);
 
-  const tasksByRoom = tasks.filter(
-    (task) =>
-      task.room &&
-      task.rooms.room_name.toLowerCase() === user.user_name.toLowerCase()
-  );
+  useEffect(() => {
+    const roomName = "kitchen"; // or read from router params
+    setFiltered(
+      tasks.filter(
+        (t) => t.rooms?.room_name?.toLowerCase() === roomName.toLowerCase(),
+      ),
+    );
+  }, [tasks]);
 
-  if (!tasks) {
-    return <Text>Loading...</Text>;
-  }
+  if (!tasks.length) return <Text>Loading...</Text>;
 
   return (
-    <View>
-      <View style={{ flex: 1 }}>
-        <TaskNav />
-        <View>
-          {tasks.map((task) => {
-            console.log(task);
-            const key = task.id;
-            return <TaskCard key={key} task={task} />;
-          })}
-        </View>
-      </View>
+    <View style={{ padding: 16 }}>
+      <Link href="/HomePage">← Home</Link>
+      {filtered.length === 0 ? (
+        <Text>No tasks in this room.</Text>
+      ) : (
+        filtered.map((task) => <TaskCard key={task.id} task={task} />)
+      )}
     </View>
   );
 }
-
-// list of tasks ordered by room. if time could add a modal component to  open with list of rooms to choose from, which takes you to list of tasks by that room.
