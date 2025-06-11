@@ -1,16 +1,17 @@
-import { mockGetPointsById } from "@/api";
 import typography from "@/styles/typography";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { UserContext } from '../app/contexts/UserContext';
 
-function UserCard({ user }) {
-  const [points, setPoints] = useState(0);
+function UserCard() {
+  // const [points, setPoints] = useState(0);
 
-  useEffect(() => {
-    mockGetPointsById(user.id).then((data) => {
-      setPoints(data.totalPoints);
-    });
-  }, [points]);
+  // useEffect(() => {
+  //   mockGetPointsById(user.id).then((data) => {
+  //     setPoints(data.totalPoints);
+  //   });
+  // }, [points]);
+      const { user} = useContext(UserContext);
 
   return (
     <View style={styles.container}>
@@ -26,7 +27,7 @@ function UserCard({ user }) {
         </View>
         <View style={styles.rightCard}>
           
-          <Text style={styles.points}>{points} points</Text>
+          <Text style={styles.points}>{user.points} points</Text> 
         </View>
       </View>
     </View>

@@ -70,7 +70,7 @@ function TaskCard({ task }) {
             <Text>{task.description}</Text>
           </View>
           <View style={styles.topRightCard}>
-            <Text>{assignPoints(task.task_name)} points</Text>
+            <Text>{assignPoints(task.task_name)} points</Text> 
             <Text>
               {task.users.username
                 ? `Assigned to: ${task.users.user_name}`
