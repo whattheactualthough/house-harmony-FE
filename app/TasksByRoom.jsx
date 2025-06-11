@@ -1,13 +1,12 @@
-import { useTasksContext } from "@/app/contexts/TasksContext";
 import { View } from "react-native";
 import { Text } from "react-native-web";
-import TaskCard from "../components/TaskCard";
 import TaskNav from "../components/TaskNav";
+import { useTasks } from "./contexts/TasksContext";
 
 export default function TasksByRoom() {
-  const { tasks, updateTaskStatus } = useTasksContext();
-
-  const tasksByRoom = tasks.filter(
+const { tasks } = useTasks();
+console.log(tasks, "rooooommmmm")
+  const tasksByRoom = tasks.data.filter(
     (task) =>
       task.room &&
       task.rooms.room_name.toLowerCase() === user.user_name.toLowerCase()
@@ -21,13 +20,13 @@ export default function TasksByRoom() {
     <View>
       <View style={{ flex: 1 }}>
         <TaskNav />
-        <View>
-          {tasks.map((task) => {
+        {/* <View>
+          {tasksByRoom?.map((task) => {
             console.log(task);
             const key = task.id;
             return <TaskCard key={key} task={task} />;
-          })}
-        </View>
+          })} */}
+        {/* </View> */}
       </View>
     </View>
   );

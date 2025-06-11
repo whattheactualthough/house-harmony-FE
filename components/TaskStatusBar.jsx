@@ -1,11 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from "../styles/colors";
 
-
-export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim, onTakePhoto, onPress }) {
-//   if (task.status.description === 'up for grabs') {
-  if (task.status.description === 'up for grabs') { //for some reason on production database it wants '1' but on test database it wants the actual description.
-
+export default function StatusBar({ task, onStatusChange, onClaim, onTakePhoto, onPress }) {
+  if (task.status.description === '1') {
     return (
       <TouchableOpacity style={styles.button} onPress={onPress}>
         <Text style={styles.buttonText}>Claim this task</Text>
@@ -13,14 +10,14 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim,
     );
   }
 
-  if (task.status.description === 'claimed') {
+  if (task.status.description === '2') {
     return (
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
           onPress={() => onStatusChange(task.id, 'Complete')}
         >
-          <Text style={styles.buttonText}>Complete task</Text>
+          <Text style={styles.buttonText}>Complete this task</Text>
         </TouchableOpacity>
         
         <TouchableOpacity
@@ -31,25 +28,15 @@ export default function StatusBar({ task, isMyTaskView, onStatusChange, onClaim,
         </TouchableOpacity>
       </View>
     );
-  } else if (task.status.description === 'complete') {
+  }
+
+  if (task.status.description === '4') {
     return (
       <Text style={styles.completeText}>✓ Completed</Text>
     );
   }
 
-  if (task.status.description === '2') {
-    return  <TouchableOpacity
-      style={styles.button}
-      onPress={onPress}
-    >
-      <Text style={styles.buttonText}>complete this task</Text>
-    </TouchableOpacity>
-
-  } else {
-return 
-}
-
-
+  return null; // Return null if none of the conditions are met
 }
 
 const styles = StyleSheet.create({

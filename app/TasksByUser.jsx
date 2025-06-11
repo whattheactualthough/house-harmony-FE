@@ -3,16 +3,13 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { mockGetTasksById } from "../api";
 import TaskCard from "../components/TaskCard";
 import TaskNav from "../components/TaskNav";
-
 function TasksByUser() {
   const [tasks, setTasks] = useState(null);
-
   useEffect(() => {
     mockGetTasksById(2).then(({ data }) => {
       setTasks(data);
     });
   }, []);
-
   if (!tasks) {
     return (
       <View style={styles.loadingContainer}>
@@ -20,12 +17,10 @@ function TasksByUser() {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
       {/* Navigation */}
       <TaskNav />
-      
       {/* Content */}
       <ScrollView style={styles.content}>
         <View style={styles.header}>
@@ -34,7 +29,6 @@ function TasksByUser() {
             {tasks.length} task{tasks.length !== 1 ? 's' : ''} assigned to you
           </Text>
         </View>
-
         {tasks.length > 0 ? (
           <View style={styles.taskList}>
             {tasks.map((task) => {
@@ -54,7 +48,6 @@ function TasksByUser() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -75,9 +68,9 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#F8F9FA',
     borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
+    borderBottomColor: '#E9ECEF',
   },
   pageTitle: {
     fontSize: 24,
@@ -111,5 +104,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
-
 export default TasksByUser;
+
+

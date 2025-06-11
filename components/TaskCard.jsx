@@ -6,16 +6,17 @@
 // add user feedback on status change haptics, scale, task moves to correct list
 
 import * as Haptics from 'expo-haptics';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal, StyleSheet, Text, View } from "react-native";
 import PhotoHandler from "../components/PhotoHandler";
 import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
-import getRoomIcons from "../utils";
+import { getRoomIcons, getRoomNames } from "../utils";
 
 function TaskCard({ task }) {
   const userId = 2;
   const [showPhotoHandler, setShowPhotoHandler] = useState(false);
+  console.log(task)
 
   const onPressHandler = () => {
     const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
@@ -50,7 +51,7 @@ function TaskCard({ task }) {
       <View style={styles.taskHeader}>
         {getRoomIcons(task.rooms.room_name)}
         <Text style={[styles.taskHeaderText, typography.heading]}>
-          {task.rooms.room_name}
+          {getRoomNames(task.rooms.room_name)}
         </Text>
       </View>
       <View>
@@ -67,7 +68,8 @@ function TaskCard({ task }) {
 
       <View style={styles.bottomCard}>
         <Text>
-          {task.users ? `Assigned to: ${task.users.user_name}` : "Claim now"}
+          {task.users.username ? `Assigned to: ${task.users.user_name}` : "Unassigned"}
+        
         </Text>
 
         <Text>
