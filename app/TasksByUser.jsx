@@ -22,7 +22,6 @@ function TasksByUser() {
   }
 
   return (
-
     <View style={styles.container}>
       {/* Navigation */}
       <TaskNav />
@@ -52,19 +51,6 @@ function TasksByUser() {
           </View>
         )}
       </ScrollView>
-// =======
-//     <View>
-//       <Link href="/HomePage" accessibilityLabel="go back to homepage">
-//         home page
-//       </Link>
-//       <Text>My Tasks</Text>
-//       <View>
-//         {tasks.map((task) => {
-//           const key = task.id;
-//           return <TaskCard key={key} task={task} />;
-//         })}
-//       </View>
-// >>>>>>> main
     </View>
   );
 }
