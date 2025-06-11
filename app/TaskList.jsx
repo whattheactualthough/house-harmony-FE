@@ -1,10 +1,12 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { BeatLoader } from "react-spinners";
 import TaskCard from "../components/TaskCard";
+import colors from "../styles/colors";
 import { useTasks } from "./contexts/TasksContext";
 import { useUser } from "./contexts/UserContext";
 
 export default function TaskList() {
-  const { tasks, userTasks } = useTasks();
+  const { tasks, userTasks, isLoading } = useTasks();
   const { userId } = useUser();
   console.log(tasks)
 
@@ -12,6 +14,15 @@ export default function TaskList() {
     return (
       <View style={styles.loadingContainer}>
         <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
+
+   if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <BeatLoader
+        color={colors.primary}/>
       </View>
     );
   }
@@ -79,5 +90,11 @@ const styles = StyleSheet.create({
   },
   taskList: {
     paddingVertical: 10,
+  },
+   loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "white",
   },
 });
