@@ -1,22 +1,17 @@
 import { createContext, useContext, useState } from "react";
 
-const defaultUser = {
-  username: "",
-  avatarUrl: "",
-  isLoggedIn: false,
-};
-
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState({ 
-    id:3,
+  id:3,
    created_at: '2025-06-02T09:52:05.771079+00:00',
    user_name: 'Kiran',
    group_name: 'House Harmony Rd',
    image_url: '',
    is_admin: true,
-   badges_earned: null});
+   badges_earned: null, 
+  points: 75});
 
   // const logIn = (event) => {
   //   event.preventDefault();
@@ -38,7 +33,7 @@ export const UserProvider = ({ children }) => {
 //   };
 
   return (
-    <UserContext.Provider value={{ user}}>
+    <UserContext.Provider value={{ user, setUser}}>
       {children}
     </UserContext.Provider>
   );

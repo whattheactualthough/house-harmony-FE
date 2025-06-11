@@ -1,6 +1,6 @@
 import { usePathname, useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 function TaskNav() {
   const router = useRouter();        
@@ -17,11 +17,11 @@ function TaskNav() {
       path: '/TaskList',
       description: 'View all available tasks'
     },
-    { 
-      label: 'My Tasks', 
-      path: '/TasksByUser',
-      description: 'Tasks assigned to you'
-    },
+    // { 
+    //   label: 'My Tasks', 
+    //   path: '/TasksByUser',
+    //   description: 'Tasks assigned to you'
+    // },
     { 
       label: 'By Room', 
       path: '/TasksByRoom',
@@ -68,7 +68,7 @@ function TaskNav() {
         })}
       </ScrollView>
       
-      {/* Quick Stats or Context Info */}
+  
       <View style={styles.contextBar}>
         <Text style={styles.contextText}>
           {getContextMessage(pathname)}
@@ -78,7 +78,6 @@ function TaskNav() {
   );
 }
 
-// Helper function to provide context-aware messages
 function getContextMessage(pathname) {
   switch (pathname) {
     case '/HomePage':

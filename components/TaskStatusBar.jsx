@@ -30,7 +30,7 @@ const handleClaimTask = ()=> {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => onStatusChange(task.id, 'Complete')}
+          onPress={() => updateTaskStatusContext(task.id, 'Complete')}
         >
           <Text style={styles.buttonText}>Complete this task</Text>
         </TouchableOpacity>
