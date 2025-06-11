@@ -1,6 +1,6 @@
-import { assignPoints } from "@/utils";
-import { createContext, useContext, useEffect, useState } from "react";
-import { fetchTasksForGroup } from "../../api";
+import { assignPoints } from '@/utils';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { fetchTasksForGroup } from '../../api';
 import { UserContext } from './UserContext';
 
 const TasksContext = createContext();
@@ -14,8 +14,8 @@ export const TasksProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [userTasks, setUserTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-    const { user, setUser } = useContext(UserContext);
-  console.log(user, "user")
+  const { user, setUser } = useContext(UserContext);
+  console.log(user, 'user');
   const userId = 3;
 
   useEffect(() => {
@@ -23,13 +23,13 @@ export const TasksProvider = ({ children }) => {
     fetchTasksForGroup()
       .then((response) => {
         const fetchedTasks = response.data;
-        setTasks(fetchedTasks);
+        // setTasks(fetchedTasks);
         const updatedTasks = fetchedTasks.map((task) => {
           if ([1, 3, 4, 5, 6, 7, 8].includes(task.id)) {
             return {
               ...task,
-              users: { ...task.users, user_name: "Kiran" },
-              status: { ...task.status, description: "2" },
+              users: { ...task.users, user_name: 'Kiran' },
+              status: { ...task.status, description: '2' },
             };
           }
           return task;
@@ -45,19 +45,17 @@ export const TasksProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const filteredUserTasks = tasks.filter(
-      (task) => task.users.user_name === "Kiran"
-    );
+    const filteredUserTasks = tasks.filter((task) => task.users.user_name === 'Kiran');
     setUserTasks(filteredUserTasks);
   }, [tasks]);
 
   const updateTaskStatusContext = (taskId, newStatusId) => {
     setTasks((prev) => {
       if (Array.isArray(prev)) {
-        console.log(prev, "updateTaskStatusContext");
+        console.log(prev, 'updateTaskStatusContext');
         const task = prev.find((task) => task.id === taskId);
-        if (task.users.user_name==="Kiran") // I know this is hardcoded, but to change later 
-        {
+        if (task.users.user_name === 'Kiran') {
+          // I know this is hardcoded, but to change later
           const points = assignPoints(task.task_name);
           task.status.description = newStatusId;
           // task.points += points; why?
@@ -71,10 +69,9 @@ export const TasksProvider = ({ children }) => {
           // );
         }
 
-        
         return [...prev];
       } else {
-        console.error("Expected an array but got:", typeof prev);
+        console.error('Expected an array but got:', typeof prev);
         return prev;
       }
     });
@@ -117,7 +114,7 @@ export const TasksProvider = ({ children }) => {
       const taskToClaim = prevTasks.find((task) => task.id === taskId);
       if (!taskToClaim) return prevTasks;
       taskToClaim.assignedUser = userId;
-      taskToClaim.status.description = "claimed";
+      taskToClaim.status.description = 'claimed';
       const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
       const updatedUserTasks = [...userTasks, taskToClaim];
       setTasks(updatedTasks);
