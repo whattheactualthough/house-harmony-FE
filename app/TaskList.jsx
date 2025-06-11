@@ -2,12 +2,11 @@ import { Link } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 import TaskCard from "../components/TaskCard";
 import { useTasks } from "./contexts/TasksContext";
-
+import { useUser } from "./contexts/UserContext";
 
 export default function TaskList() {
-  
-  const { tasks } = useTasks();
-console.log(tasks, "hiiiii")
+  const { tasks, userTasks } = useTasks();
+  const { userId } = useUser();
 
   if (!tasks) {
     return <Text>Loading...</Text>;
@@ -22,14 +21,21 @@ console.log(tasks, "hiiiii")
       <Link href="/HomePage" accessibilityLabel="go back to homepage">
         home page
       </Link>
-        <View>
-          {tasks?.data?.map((task) => {
-            console.log(task);
-            const key = task.id;
-            return <TaskCard key={key} task={task} />;
-          })}
-        </View>
-        <Link href="/CreateTask" accessibilityLabel="create a new task">create new task</Link>
+      <View>
+        {tasks?.map((task) => {
+          const key = task.id;
+          return (
+            <TaskCard
+              key={key}
+              task={task}
+              onClaim={() => claimTask(task.id, userId)}
+            />
+          );
+        })}
+      </View>
+      <Link href="/CreateTask" accessibilityLabel="create a new task">
+        create new task
+      </Link>
     </ScrollView>
   );
 }
