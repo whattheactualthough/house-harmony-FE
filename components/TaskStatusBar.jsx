@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import SlideButton from 'rn-slide-button';
 import { useTasks } from "../app/contexts/TasksContext";
 import colors from "../styles/colors";
 
@@ -19,7 +20,8 @@ const handleClaimTask = ()=> {
 
   if (task.status.description === '1') {
     return (
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      // <SlideButton title="Slide To Claim this task" onReachedToEnd={onPress}/>
+      <TouchableOpacity style={styles.button} >
         <Text style={styles.buttonText}>Claim this task</Text>
       </TouchableOpacity>
     );
@@ -30,7 +32,7 @@ const handleClaimTask = ()=> {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => updateTaskStatusContext(task.id, 'Complete')}
+          onPress={() => updateTaskStatusContext(task.id, '4')}
         >
           <Text style={styles.buttonText}>Complete this task</Text>
         </TouchableOpacity>
@@ -81,7 +83,9 @@ const styles = StyleSheet.create({
   },
   completeText: {
     marginTop: 8,
-    color: 'green',
+    color: colors.secondary,
     fontWeight: 'bold',
+    paddingRight: 8,
+    paddingBottom: 8
   },
 });

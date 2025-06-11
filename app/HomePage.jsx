@@ -1,8 +1,11 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import colors from "@/styles/colors";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { BeatLoader } from "react-spinners";
 import TaskCard from "../components/TaskCard";
 import UserCard from "../components/UserCard";
 import { useTasks } from "./contexts/TasksContext";
 import { useUser } from "./contexts/UserContext";
+
 
 export default function UserPage() {
 
@@ -19,7 +22,8 @@ const {user} = useUser();
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <Text>Loading...</Text>
+        <BeatLoader
+        color={colors.primary}/>
       </View>
     );
   }

@@ -22,11 +22,11 @@ function TaskNav() {
     //   path: '/TasksByUser',
     //   description: 'Tasks assigned to you'
     // },
-    { 
-      label: 'By Room', 
-      path: '/TasksByRoom',
-      description: 'Tasks organized by room'
-    },
+    // { 
+    //   label: 'By Room', 
+    //   path: '/TasksByRoom',
+    //   description: 'Tasks organized by room'
+    // },
     { 
       label: 'Create Task', 
       path: '/CreateTask',

@@ -10,8 +10,9 @@ import { useState } from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import PhotoHandler from "../components/PhotoHandler";
 import TaskStatusBar from "../components/TaskStatusBar";
+import colors from "../styles/colors";
 import typography from "../styles/typography";
-import { assignPoints, getRoomIcons, getRoomNames } from "../utils";
+import { getRoomIcons, getRoomNames } from "../utils";
 
 import { useTasks } from "../app/contexts/TasksContext";
 import { useUser } from "../app/contexts/UserContext";
@@ -19,7 +20,6 @@ import { useUser } from "../app/contexts/UserContext";
 function TaskCard({ task }) {
   const { claimTask, updateTaskStatusContext} = useTasks();
   const {user} = useUser()
-  console.log(user, "user")
   const [showPhotoHandler, setShowPhotoHandler] = useState(false);
 
   const onPressHandler = () => {
@@ -66,14 +66,15 @@ function TaskCard({ task }) {
       <View>
         <View style={styles.topCard}>
           <View style={styles.topLeftCard}>
-            <Text style={{ marginTop: 16 }}>{task.task_name}</Text>
-            <Text>{task.description}</Text>
+            <Text style={{ marginTop: 16, fontWeight: "bold", paddingHorizontal: 16}}>{task.task_name}</Text>
+            <Text style={{paddingVertical: 16, paddingHorizontal: 16}}>{task.description}</Text>
           </View>
           <View style={styles.topRightCard}>
-            <Text>{assignPoints(task.task_name)} points</Text> 
-            <Text>
-              {task.users.username
-                ? `Assigned to: ${task.users.user_name}`
+            <Text style={styles.points}>{user.points}</Text> 
+            <Text>points</Text>
+            <Text style={styles.assignedTo}>
+              {user.user_name
+                ? `Assigned to: ${user.user_name}`
                 : "Unassigned"}
             </Text>
           </View>
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
   topRightCard: {
     justifyContent: "flex-start",
     alignItems: "flex-end",
+    paddingRight: 20
   },
   topLeftCard: {
     flex: 1,
@@ -151,7 +153,20 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "#eee",
     paddingTop: 8,
+    paddingRight: 20
   },
+  points:{
+    fontSize:30,
+    // paddingBottom: 8,
+    paddingLeft: 8,
+    color: colors.primary
+  },
+  pointsText:{
+    paddingBottom: 10
+  },
+  assignedTo:{
+    paddingVertical: 15
+  }
 });
 
 export default TaskCard;

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { BeatLoader } from "react-spinners";
 import { fetchUserPoints, fetchUsers } from "../api";
+import colors from "../styles/colors";
 
 export default function LeaderBoard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
@@ -74,8 +76,9 @@ export default function LeaderBoard() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.loadingText}>Loading leaderboard...</Text>
+      <View style={styles.loadingContainer}>
+        <BeatLoader
+        color={colors.primary}/>
       </View>
     );
   }
@@ -297,6 +300,12 @@ const styles = StyleSheet.create({
     marginTop: 100,
     color: '#64748b',
     fontWeight: '500',
+  },
+    loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "white",
   },
 });
 
