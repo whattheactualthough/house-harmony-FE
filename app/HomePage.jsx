@@ -1,7 +1,6 @@
 import { mockGetUserById } from "@/api";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import TaskNav from "../components/TaskNav";
 import UserCard from "../components/UserCard";
 import { useTasks } from "./contexts/TasksContext";
 
@@ -22,26 +21,24 @@ export default function UserPage() {
       task.users.user_name.toLowerCase() === user.user_name.toLowerCase()
   );
 
-
-  console.log(tasksByUser)
   if (!user || !tasks) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.page}>
-      <View style={{ flex: 1 }}>
-        <TaskNav />
-
-        <View>
-          <UserCard key={2} user={user} />
-        </View>
-        <View>
-          {tasksByUser?.map((task) => {
-            const key = task.id;
-            return <TaskCard key={key} task={task} />;
-          })}
-        </View>
+      <View>
+        <UserCard key={2} user={user} />
+      </View>
+      <View>
+        {tasksByUser?.map((task) => {
+          const key = task.id;
+          return <TaskCard key={key} task={task} />;
+        })}
       </View>
     </View>
   );
@@ -52,6 +49,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     paddingHorizontal: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "white",
   },
 });
 

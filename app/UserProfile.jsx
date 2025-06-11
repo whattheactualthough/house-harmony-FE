@@ -1,8 +1,6 @@
-import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { mockGetPointsById, mockGetTasksById, mockGetUserById, mockGetUsers } from "../api";
-import { useUser } from "./contexts/UserContext";
 
 function UserProfile() {
   const [user, setUser] = useState(null);
@@ -126,9 +124,6 @@ function UserProfile() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Error loading profile</Text>
-        <Link href="/HomePage">
-          <Text>Go back to home</Text>
-        </Link>
       </View>
     );
   }
@@ -138,11 +133,6 @@ function UserProfile() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
       <View style={{ padding: 20 }}>
-        
-        {/* Navigation */}
-        <Link href="/HomePage" style={{ marginBottom: 20 }}>
-          <Text>← Back to Home</Text>
-        </Link>
 
         {/* Profile Header */}
         <View style={{ alignItems: 'center', marginBottom: 30 }}>
@@ -276,42 +266,6 @@ function UserProfile() {
               No tasks assigned yet
             </Text>
           )}
-        </View>
-
-        {/* Quick Actions */}
-        <View style={{ marginBottom: 30 }}>
-          <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 15 }}>
-            Quick Actions
-          </Text>
-          <Link href="/TaskList" style={{ 
-            backgroundColor: '#4CAF50', 
-            padding: 15, 
-            borderRadius: 8, 
-            marginBottom: 10 
-          }}>
-            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
-              View All Tasks
-            </Text>
-          </Link>
-          <Link href="/LeaderBoard" style={{ 
-            backgroundColor: '#2196F3', 
-            padding: 15, 
-            borderRadius: 8, 
-            marginBottom: 10 
-          }}>
-            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
-              View Leaderboard
-            </Text>
-          </Link>
-          <Link href="/TasksByUser" style={{ 
-            backgroundColor: '#FF9800', 
-            padding: 15, 
-            borderRadius: 8 
-          }}>
-            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>
-              My Tasks Only
-            </Text>
-          </Link>
         </View>
 
       </View>
