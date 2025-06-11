@@ -1,7 +1,22 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTasks } from "../app/contexts/TasksContext";
 import colors from "../styles/colors";
 
-export default function StatusBar({ task, onStatusChange, onClaim, onTakePhoto, onPress }) {
+export default function StatusBar({ task, onTakePhoto, onPress }) {
+    const { claimTask, updateTaskStatusContext } = useTasks();
+
+const handleClaimTask = ()=> {
+    const userId = 2;
+    claimTask(task.id, userId)
+    console.log("task claimed in handle claim in status bar")
+}
+
+
+  const handleStatusChange = () => {
+    updateTaskStatusContext(task.id, '2');
+    console.log("status handled in status bar")
+  };
+
   if (task.status.description === '1') {
     return (
       <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -36,7 +51,7 @@ export default function StatusBar({ task, onStatusChange, onClaim, onTakePhoto, 
     );
   }
 
-  return null; // Return null if none of the conditions are met
+  return null;
 }
 
 const styles = StyleSheet.create({

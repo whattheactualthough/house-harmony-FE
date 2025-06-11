@@ -9,20 +9,27 @@ const defaultUser = {
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({});
-
-  const logIn = (event) => {
-    event.preventDefault();
-    setUser((prevUser) => ({
-         id: 1,
+  const [user, setUser] = useState({ 
+    id:3,
    created_at: '2025-06-02T09:52:05.771079+00:00',
    user_name: 'Kiran',
    group_name: 'House Harmony Rd',
    image_url: '',
    is_admin: true,
-   badges_earned: null
-    }));
-    };
+   badges_earned: null});
+
+  // const logIn = (event) => {
+  //   event.preventDefault();
+  //   setUser((prevUser) => ({
+  //        id: 1,
+  //  created_at: '2025-06-02T09:52:05.771079+00:00',
+  //  user_name: 'Kiran',
+  //  group_name: 'House Harmony Rd',
+  //  image_url: '',
+  //  is_admin: true,
+  //  badges_earned: null
+  //   }));
+  //   };
   
 
 //   const logOut = (event) => {
@@ -31,7 +38,7 @@ export const UserProvider = ({ children }) => {
 //   };
 
   return (
-    <UserContext.Provider value={{ user, logIn }}>
+    <UserContext.Provider value={{ user}}>
       {children}
     </UserContext.Provider>
   );

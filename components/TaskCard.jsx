@@ -5,29 +5,39 @@
 // to do - add axios functionality for status patch in onStatusChange function
 // add user feedback on status change haptics, scale, task moves to correct list
 
-import * as Haptics from 'expo-haptics';
-import { useState } from 'react';
+import * as Haptics from "expo-haptics";
+import { useState } from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import PhotoHandler from "../components/PhotoHandler";
 import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
 import { assignPoints, getRoomIcons, getRoomNames } from "../utils";
 
+import { useTasks } from "../app/contexts/TasksContext";
+import { useUser } from "../app/contexts/UserContext";
+
 function TaskCard({ task }) {
-  const userId = 2;
+  const { claimTask, updateTaskStatusContext} = useTasks();
+  const {user} = useUser()
+  console.log(user, "user")
   const [showPhotoHandler, setShowPhotoHandler] = useState(false);
 
   const onPressHandler = () => {
-    const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
-    updateTaskStatus(task.id, newStatusId);
+    const newStatusId =
+      task.status.description === "unclaimed" ? "claimed" : "completed";
+    updateTaskStatusContext(task.id, newStatusId);
   };
 
 
   const onComplete = () => {
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult!
     console.log(`${task.id} : done`);
     // make a button to be visible oncomplete to upload a photo
   };
+
+  function onClaim() {
+    return claimTask(task.id, user.id)
+  }
 
   const onTakePhoto = () => {
     setShowPhotoHandler(true);
@@ -60,29 +70,28 @@ function TaskCard({ task }) {
             <Text>{task.description}</Text>
           </View>
           <View style={styles.topRightCard}>
-            
             <Text>{assignPoints(task.task_name)} points</Text>
-             <Text>
-          {task.users.username ? `Assigned to: ${task.users.user_name}` : "Unassigned"}
-        </Text>
+            <Text>
+              {task.users.username
+                ? `Assigned to: ${task.users.user_name}`
+                : "Unassigned"}
+            </Text>
           </View>
         </View>
       </View>
 
       <View style={styles.bottomCard}>
-       
-
         <Text>
           {task.task_specific_date ? task.task_specific_date : task.due_date}
         </Text>
-    
+
         <TaskStatusBar
           status={task.status.description}
-          claimedByUser={userId}
+          claimedByUser={user.id}
           onPress={onPressHandler}
           onTakePhoto={onTakePhoto}
-          onStatusChange={() => console.log(`${task.id}status: ${task.status.description}`)}
-          task={task} />
+          task={task}
+        />
       </View>
 
       <Modal
@@ -93,11 +102,12 @@ function TaskCard({ task }) {
         <PhotoHandler
           taskId={task.id}
           onPhotoTaken={onPhotoTaken}
-          onClose={onClosePhotoHandler} />
+          onClose={onClosePhotoHandler}
+        />
       </Modal>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

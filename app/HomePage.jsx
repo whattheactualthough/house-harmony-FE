@@ -15,7 +15,7 @@ export default function UserPage() {
     });
   }, []);
 
-  const tasksByUser = tasks?.data?.filter(
+  const tasksByUser = tasks?.filter(
     (task) =>
       task.users &&
       user &&
