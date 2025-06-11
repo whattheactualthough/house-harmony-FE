@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { mockGetPointsById, mockGetTasksById, mockGetUserById, mockGetUsers } from "../api";
+import { useUser } from "./contexts/UserContext";
 
 function UserProfile() {
   const [user, setUser] = useState(null);

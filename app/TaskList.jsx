@@ -1,29 +1,21 @@
-import { Link, View } from "expo-router";
-import { useEffect, useState } from "react";
-import { ScrollView, Text } from "react-native-web";
-import { fetchTasksForGroup } from "../api";
+import { Link } from "expo-router";
+import { ScrollView, Text, View } from "react-native";
 import TaskCard from "../components/TaskCard";
-import CreateTask from "./CreateTask";
+import { useTasks } from "./contexts/TasksContext";
+
 
 export default function TaskList() {
-  const [tasks, setTasks] = useState([]);
-
-  useEffect(() => {
-    // mockGetTasks().then(({ data }) => {
-    //   setTasks(data);
-    // });
-    fetchTasksForGroup().then(({data})=>{
-      setTasks(data)
-    })
-  }, []);
+  
+  const { tasks } = useTasks();
+console.log(tasks, "hiiiii")
 
   if (!tasks) {
     return <Text>Loading...</Text>;
   }
 
-  function addTask(){
-   return (CreateTask)
-  }
+  // function addTask(){
+  //  return (CreateTask)
+  // }
 
   return (
     <ScrollView>
@@ -31,7 +23,7 @@ export default function TaskList() {
         home page
       </Link>
         <View>
-          {tasks.map((task) => {
+          {tasks?.data?.map((task) => {
             console.log(task);
             const key = task.id;
             return <TaskCard key={key} task={task} />;

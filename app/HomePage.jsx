@@ -1,14 +1,13 @@
-import { useTasksContext } from "@/app/contexts/Tasks";
+import { mockGetUserById } from "@/api";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { mockGetUserById } from "../api";
-import TaskCard from "../components/TaskCard";
 import TaskNav from "../components/TaskNav";
 import UserCard from "../components/UserCard";
+import { useTasks } from "./contexts/TasksContext";
 
 export default function UserPage() {
   const [user, setUser] = useState(null);
-  const { tasks, updateTaskStatus } = useTasksContext();
+  const { tasks } = useTasks();
 
   useEffect(() => {
     mockGetUserById(2).then(({ data }) => {
@@ -16,13 +15,15 @@ export default function UserPage() {
     });
   }, []);
 
-  const tasksByUser = tasks.filter(
+  const tasksByUser = tasks?.data?.filter(
     (task) =>
       task.users &&
       user &&
       task.users.user_name.toLowerCase() === user.user_name.toLowerCase()
   );
 
+
+  console.log(tasksByUser)
   if (!user || !tasks) {
     return <Text>Loading...</Text>;
   }
@@ -36,7 +37,7 @@ export default function UserPage() {
           <UserCard key={2} user={user} />
         </View>
         <View>
-          {tasksByUser.map((task) => {
+          {tasksByUser?.map((task) => {
             const key = task.id;
             return <TaskCard key={key} task={task} />;
           })}

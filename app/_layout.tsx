@@ -4,10 +4,9 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import "react-native-reanimated";
-import { TasksProvider } from "../app/contexts/Tasks";
-import { UserProvider } from "../app/contexts/User";
 import FooterTabs from "../components/FooterTabs";
-
+import { TasksProvider } from "./contexts/TasksContext";
+import { UserProvider } from "./contexts/UserContext";
 
 export default function RootLayout() {
   const [loaded] = useFonts({
@@ -26,7 +25,9 @@ export default function RootLayout() {
           <View style={styles.container}>
             <View style={styles.content}>
               <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="HomePage" options={{ title: "Home" }} />
+                <Stack.Screen name="TaskList" options={{ title: "Tasks" }} />
                 <Stack.Screen name="+not-found" />
               </Stack>
             </View>
