@@ -13,39 +13,37 @@ import TaskStatusBar from "../components/TaskStatusBar";
 import typography from "../styles/typography";
 import getRoomIcons from "../utils";
 
+function TaskCard({ task }) {
+  const userId = 2;
+  const [showPhotoHandler, setShowPhotoHandler] = useState(false);
 
-function TaskCard({ task}) {
-const userId = 2;
-const [showPhotoHandler, setShowPhotoHandler] = useState(false);
-// const [localStatus, setLocalStatus ] = useState(tasks.task_id.status) // not right
-
-const onPressHandler = () => {
-  const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
-  updateTaskStatus(task.id, newStatusId);
-};
+  const onPressHandler = () => {
+    const newStatusId = task.status.description === 'unclaimed' ? 'claimed' : 'completed';
+    updateTaskStatus(task.id, newStatusId);
+  };
 
 
-const onComplete = ()=> {
-  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
-  console.log(`${task.id} : done`)
-  // make a button to be visible oncomplete to upload a photo
-}
+  const onComplete = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success); // not sure this is working, phone being difficult! 
+    console.log(`${task.id} : done`);
+    // make a button to be visible oncomplete to upload a photo
+  };
 
-const onTakePhoto = () => {
-  setShowPhotoHandler(true);
-}
+  const onTakePhoto = () => {
+    setShowPhotoHandler(true);
+  };
 
-const onPhotoTaken = (taskId, imageUri) => {
-  console.log(`Photo taken for task ${taskId}:`, imageUri);
-  // Here you would typically upload the photo to your backend
-  // and then mark the task as complete
-  onComplete();
-  setShowPhotoHandler(false);
-}
+  const onPhotoTaken = (taskId, imageUri) => {
+    console.log(`Photo taken for task ${taskId}:`, imageUri);
+    // Here you would typically upload the photo to your backend
+    // and then mark the task as complete
+    onComplete();
+    setShowPhotoHandler(false);
+  };
 
-const onClosePhotoHandler = () => {
-  setShowPhotoHandler(false);
-}
+  const onClosePhotoHandler = () => {
+    setShowPhotoHandler(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -81,27 +79,23 @@ const onClosePhotoHandler = () => {
           claimedByUser={userId}
           onPress={onPressHandler}
           onTakePhoto={onTakePhoto}
-  onStatusChange={() =>
-            console.log(`${task.id}status: ${task.status.description}`)
-          }
-          task={task}
-        />
+          onStatusChange={() => console.log(`${task.id}status: ${task.status.description}`)}
+          task={task} />
       </View>
 
-    <Modal
-      visible={showPhotoHandler}
-      animationType="slide"
-      presentationStyle="pageSheet"
-    >
-      <PhotoHandler
-        taskId={task.id}
-        onPhotoTaken={onPhotoTaken}
-        onClose={onClosePhotoHandler}
-      />
-    </Modal>
+      <Modal
+        visible={showPhotoHandler}
+        animationType="slide"
+        presentationStyle="pageSheet"
+      >
+        <PhotoHandler
+          taskId={task.id}
+          onPhotoTaken={onPhotoTaken}
+          onClose={onClosePhotoHandler} />
+      </Modal>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

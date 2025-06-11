@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
-import { useUser } from "./contexts/User";
+import { useUser } from "./contexts/UserContext";
 
 function UserProfile({}) {
  const user = useUser()
