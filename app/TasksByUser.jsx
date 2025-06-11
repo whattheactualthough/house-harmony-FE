@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { mockGetTasksById } from "../api";
 import TaskCard from "../components/TaskCard";
-import TaskNav from "../components/TaskNav";
+
 function TasksByUser() {
   const [tasks, setTasks] = useState(null);
+  
   useEffect(() => {
     mockGetTasksById(2).then(({ data }) => {
       setTasks(data);
     });
   }, []);
+  
   if (!tasks) {
     return (
       <View style={styles.loadingContainer}>
@@ -17,11 +19,9 @@ function TasksByUser() {
       </View>
     );
   }
+  
   return (
     <View style={styles.container}>
-      {/* Navigation */}
-      <TaskNav />
-      {/* Content */}
       <ScrollView style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.pageTitle}>My Tasks</Text>
@@ -48,6 +48,7 @@ function TasksByUser() {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -104,6 +105,5 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+
 export default TasksByUser;
-
-

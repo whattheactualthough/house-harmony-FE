@@ -5,6 +5,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 import "react-native-reanimated";
 import FooterTabs from "../components/FooterTabs";
+import TaskNav from "../components/TaskNav";
 import { TasksProvider } from "./contexts/TasksContext";
 import { UserProvider } from "./contexts/UserContext";
 
@@ -24,11 +25,17 @@ export default function RootLayout() {
         <TasksProvider>
           <View style={styles.container}>
             <View style={styles.content}>
+              <TaskNav />
               <Stack>
                 <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="HomePage" options={{ title: "Home" }} />
-                <Stack.Screen name="TaskList" options={{ title: "Tasks" }} />
-                <Stack.Screen name="+not-found" />
+                <Stack.Screen name="HomePage" options={{ headerShown: false }} />
+                <Stack.Screen name="TaskList" options={{ headerShown: false }} />
+                <Stack.Screen name="TasksByUser" options={{ headerShown: false }} />
+                <Stack.Screen name="TasksByRoom" options={{ headerShown: false }} />
+                <Stack.Screen name="CreateTask" options={{ headerShown: false }} />
+                <Stack.Screen name="LeaderBoard" options={{ headerShown: false }} />
+                <Stack.Screen name="UserProfile" options={{ headerShown: false }} />
+                <Stack.Screen name="+not-found" options={{ headerShown: false }} />
               </Stack>
             </View>
             <FooterTabs />

@@ -1,15 +1,13 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { 
-  Button, 
   ScrollView, 
   StyleSheet, 
   Text, 
   TextInput, 
   TouchableOpacity, 
   View,
-  Alert,
-  Platform
+  Alert
 } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import colors from "../styles/colors";
@@ -125,13 +123,6 @@ function CreateTask() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Link href="/TaskList" asChild>
-          <TouchableOpacity style={styles.backButton}>
-            <Ionicons name="chevron-back" size={24} color={colors.primary} />
-            <Text style={styles.backText}>Back to Tasks</Text>
-          </TouchableOpacity>
-        </Link>
-        
         <Text style={[styles.title, typography.subheading]}>Create New Task</Text>
         <Text style={[styles.subtitle, typography.body]}>
           Add a new task for your household
@@ -356,20 +347,9 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#fff",
     padding: 20,
-    paddingTop: 60,
+    paddingTop: 40,
     borderBottomWidth: 1,
     borderBottomColor: "#eee",
-  },
-  backButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  backText: {
-    marginLeft: 5,
-    color: colors.primary,
-    fontSize: 16,
-    fontWeight: "500",
   },
   title: {
     marginBottom: 5,
