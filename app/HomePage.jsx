@@ -1,27 +1,22 @@
-import { mockGetUserById } from "@/api";
-import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import TaskCard from "../components/TaskCard";
 import UserCard from "../components/UserCard";
 import { useTasks } from "./contexts/TasksContext";
+import { useUser } from "./contexts/UserContext";
 
 export default function UserPage() {
-  const [user, setUser] = useState(null);
-  const { tasks } = useTasks();
 
-  useEffect(() => {
-    mockGetUserById(2).then(({ data }) => {
-      setUser(data);
-    });
-  }, []);
+  const { userTasks, isLoading } = useTasks();
+  console.log(userTasks)
+const {user} = useUser();
+  // const tasksByUser = tasks?.filter(
+  //   (task) =>
+  //     task.users &&
+  //     user &&
+  //     task.users.user_name.toLowerCase() === user.user_name.toLowerCase()
+  // );
 
-  const tasksByUser = tasks?.filter(
-    (task) =>
-      task.users &&
-      user &&
-      task.users.user_name.toLowerCase() === user.user_name.toLowerCase()
-  );
-
-  if (!user || !tasks) {
+  if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
         <Text>Loading...</Text>
@@ -31,15 +26,17 @@ export default function UserPage() {
 
   return (
     <View style={styles.page}>
+      <ScrollView style={styles.content}>
       <View>
         <UserCard key={2} user={user} />
       </View>
       <View>
-        {tasksByUser?.map((task) => {
+        {userTasks?.map((task) => {
           const key = task.id;
           return <TaskCard key={key} task={task} />;
         })}
       </View>
+      </ScrollView>
     </View>
   );
 }

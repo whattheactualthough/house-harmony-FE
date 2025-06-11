@@ -6,6 +6,7 @@ import { useUser } from "./contexts/UserContext";
 export default function TaskList() {
   const { tasks, userTasks } = useTasks();
   const { userId } = useUser();
+  console.log(tasks)
 
   if (!tasks) {
     return (

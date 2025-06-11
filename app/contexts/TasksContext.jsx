@@ -3,78 +3,106 @@ import { fetchTasksForGroup } from "../../api";
 
 const TasksContext = createContext();
 
-export const useTasks=()=>{
-    const context = useContext(TasksContext)
-    return context
+export const useTasks = () => {
+  const context = useContext(TasksContext);
+  return context;
 };
 
-export const TasksProvider=({children})=>{
-    const [tasks, setTasks] = useState([]);
-    const [userTasks, setUserTasks] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+export const TasksProvider = ({ children }) => {
+  const [tasks, setTasks] = useState([]);
+  const [userTasks, setUserTasks] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
+  const userId = 3;
 
     useEffect(() => {
     setIsLoading(true);
     fetchTasksForGroup()
-      .then((tasks) => {
-        setTasks(tasks.data);
+      .then((response) => {
+        const fetchedTasks = response.data;
+        setTasks(fetchedTasks);
+        const updatedTasks = fetchedTasks.map((task) => {
+          if ([1, 3, 4, 5, 6, 7, 8].includes(task.id)) {
+            return {
+              ...task,
+              users: { ...task.users, user_name: 'Kiran' },
+              status: { ...task.status, description: '2' },
+            };
+          }
+          return task;
+        });
+        setTasks(updatedTasks);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       })
       .finally(() => {
         setIsLoading(false);
       });
   }, []);
 
-const updateTaskStatusContext = (taskId, newStatusId) => {
-  setTasks((prev) => {
-    if (Array.isArray(prev)) {
-        console.log(prev, "updateTaskStatusContext called")
-      return prev.map((task) =>
-        task.id === taskId  ? {
-              ...task,
-              status: {
-                ...task.status,
-                description: newStatusId,
-              },
-            }
-          : task
-      );
-    } else {
-      console.error('Expected prev to be an array, but got:', typeof prev);
-      return prev; 
-    }
-  });
-};
 
+  useEffect(() => {
+    const filteredUserTasks = tasks.filter((task) => task.users.user_name === 'Kiran');
+    setUserTasks(filteredUserTasks);
+  }, [tasks]);
 
-//   const claimTask = (taskId, userId) => {
-//     setTasks((prevTasks) =>
-//       prevTasks.map((task) =>
-//         task.id === taskId
-//           ? { ...task, assignedUser: userId, status: 'claimed' }
-//           : task
-//       )
-//     );
-//   };
+  const updateTaskStatusContext = (taskId, newStatusId) => {
+    setTasks((prev) => {
+      if (Array.isArray(prev)) {
+        console.log(prev, "updateTaskStatusContext called");
+        return prev.map((task) =>
+          task.id === taskId
+            ? {
+                ...task,
+                status: {
+                  ...task.status,
+                  description: newStatusId,
+                },
+              }
+            : task
+        );
+      } else {
+        console.error("Expected prev to be an array, but got:", typeof prev);
+        return prev;
+      }
+    });
+  };
 
-const claimTask = (taskId, userId) => {
-  setTasks((prevTasks) => {
-    const taskToClaim = prevTasks.find((task) => task.id === taskId);
-    if (!taskToClaim) return prevTasks;
-    taskToClaim.assignedUser = userId;
-    taskToClaim.status.description = 'claimed';
-    const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
-    const updatedUserTasks = [...userTasks, taskToClaim];
-    setTasks(updatedTasks);
-    setUserTasks(updatedUserTasks);
-  });
-};
+  //   const claimTask = (taskId, userId) => {
+  //     setTasks((prevTasks) =>
+  //       prevTasks.map((task) =>
+  //         task.id === taskId
+  //           ? { ...task, assignedUser: userId, status: 'claimed' }
+  //           : task
+  //       )
+  //     );
+  //   };
 
-return (
-    <TasksContext.Provider value={{isLoading, tasks, setTasks, updateTaskStatusContext, claimTask, userTasks}}>
-        {children}
+  const claimTask = (taskId, userId) => {
+    setTasks((prevTasks) => {
+      const taskToClaim = prevTasks.find((task) => task.id === taskId);
+      if (!taskToClaim) return prevTasks;
+      taskToClaim.assignedUser = userId;
+      taskToClaim.status.description = "claimed";
+      const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
+      const updatedUserTasks = [...userTasks, taskToClaim];
+      setTasks(updatedTasks);
+      setUserTasks(updatedUserTasks);
+    });
+  };
+
+  return (
+    <TasksContext.Provider
+      value={{
+        isLoading,
+        tasks,
+        setTasks,
+        updateTaskStatusContext,
+        claimTask,
+        userTasks,
+      }}
+    >
+      {children}
     </TasksContext.Provider>
-)
-}
+  );
+};
