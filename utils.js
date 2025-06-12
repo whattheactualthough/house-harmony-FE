@@ -61,7 +61,7 @@ export function getRoomNames(room){
 }
 
 export function assignPoints(task){
-  if(task === "take the bins out for bin day on Wednesdays" || task === "clean the toilet" || task === "empty the bin"){
+  if(task === "take the bins out for bin day on Wednesdays" || task === "clean the toilet" || task === "empty bin"){
     return 200
   }
   if(task === "water the plants" || task === "sort the post"){

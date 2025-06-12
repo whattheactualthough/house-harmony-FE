@@ -1,15 +1,15 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Link } from "expo-router";
 import { useState } from "react";
-import { 
-  ScrollView, 
-  StyleSheet, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  View,
-  Alert
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
 import colors from "../styles/colors";
 import typography from "../styles/typography";
 
@@ -26,9 +26,9 @@ function CreateTask() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const desirabilityOptions = [
-    { value: "low", label: "Low", points: 25, color: "#57BA98" },
-    { value: "medium", label: "Medium", points: 50, color: "#65CCB8" },
-    { value: "high", label: "High", points: 100, color: "#3B945E" }
+    { value: "high", label: "High", points: 25, color: "#57BA98" },
+    { value: "medium", label: "Medium", points: 75, color: "#65CCB8" },
+    { value: "low", label: "Low", points: 200, color: "#3B945E" }
   ];
 
   const frequencyOptions = [
@@ -67,7 +67,6 @@ function CreateTask() {
       due_date: hasDueDate ? dueDate : null
     };
 
-    // here you should call the API 
     console.log("Creating task:", taskData);
     console.log("Task created!");
     setIsSubmitted(true);
@@ -184,7 +183,7 @@ function CreateTask() {
         <View style={styles.fieldContainer}>
           <Text style={[styles.label, typography.heading]}>Task Desirability</Text>
           <Text style={[styles.helperText, typography.caption]}>
-            How much do you want this task done? Higher desirability = more points
+            Higher points for the least desirable tasks
           </Text>
           <View style={styles.desirabilityContainer}>
             {desirabilityOptions.map((option) => (

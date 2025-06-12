@@ -7,7 +7,7 @@ export default function StatusBar({ task, onTakePhoto, onPress }) {
   const { claimTask, updateTaskStatusContext } = useTasks();
 
   const handleClaimTask = () => {
-    const userId = 2;
+    const userId = 3;
     claimTask(task.id, userId);
     console.log('task claimed in handle claim in status bar');
   };
@@ -20,7 +20,7 @@ export default function StatusBar({ task, onTakePhoto, onPress }) {
   if (task.status.description === '1') {
     return (
       // <SlideButton title="Slide To Claim this task" onReachedToEnd={onPress}/>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={handleClaimTask}>
         <Text style={styles.buttonText}>Claim this task</Text>
       </TouchableOpacity>
     );

@@ -46,6 +46,7 @@
     "react-native-webview": "13.13.5",
     "react-router-dom": "^7.6.2",
     "react-spinners": "^0.17.0",
+    "react-toastify": "^11.0.5",
     "rn-slide-button": "^1.0.3"
   },
   "devDependencies": {
