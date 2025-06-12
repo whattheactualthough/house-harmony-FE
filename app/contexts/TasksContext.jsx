@@ -45,8 +45,10 @@ export const TasksProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const filteredUserTasks = tasks.filter((task) => task.users.user_name === 'Kiran');
-    setUserTasks(filteredUserTasks);
+    if (tasks.length) {
+      const filteredUserTasks = tasks.filter((task) => task.users.user_name === 'Kiran');
+      setUserTasks(filteredUserTasks);
+    }
   }, [tasks]);
 
   const updateTaskStatusContext = (taskId, newStatusId) => {
@@ -117,8 +119,9 @@ export const TasksProvider = ({ children }) => {
       taskToClaim.status.description = 'claimed';
       const updatedTasks = prevTasks.filter((task) => task.id !== taskId);
       const updatedUserTasks = [...userTasks, taskToClaim];
-      setTasks(updatedTasks);
-      setUserTasks(updatedUserTasks);
+      // setTasks(updatedTasks);
+      // setUserTasks(updatedUserTasks);
+      return updatedTasks;
     });
   };
 
